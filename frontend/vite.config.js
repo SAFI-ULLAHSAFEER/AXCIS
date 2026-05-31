@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    // Local dev — proxy to local backend
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
@@ -12,5 +13,11 @@ export default defineConfig({
         secure: false,
       }
     }
+  },
+  define: {
+    // Production backend URL — update after Render deploy
+    __API_URL__: JSON.stringify(
+      process.env.VITE_API_URL || 'http://localhost:5000'
+    )
   }
 })
