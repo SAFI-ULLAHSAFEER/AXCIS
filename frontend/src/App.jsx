@@ -55,7 +55,7 @@ const AxcisLogo = ({ size = 'md' }) => {
             <stop offset="100%" stopColor="#8892aa"/>
           </linearGradient>
         </defs>
-        <text x="2" y="34" fill="#ffffff" fontSize="36" fontWeight="900"
+        <text x="2" y="34" fill="#ffffff" fontSize="36" fontWeight="900" className="axcis-wordmark"
           fontFamily="'Outfit','Inter',sans-serif" letterSpacing="5">AXCIS</text>
       </svg>
     </span>
@@ -140,9 +140,11 @@ const COLLAB_MODELS = [
 
 /* ─── MAIN APP ───────────────────────────────────────────────────────────── */
 export default function App() {
-  const [page, setPage]         = useState('home');
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme]         = useState(() => localStorage.getItem('axcis-theme') || 'dark');
+  const [themeOpen, setThemeOpen] = useState(false);
+  const [page, setPage]           = useState('home');
+  const [menuOpen, setMenuOpen]   = useState(false);
+  const [scrolled, setScrolled]   = useState(false);
   const [slide, setSlide]       = useState(0);
   const [activeSvc, setActiveSvc] = useState('support');
   const [toasts, setToasts]     = useState([]);
@@ -192,6 +194,29 @@ export default function App() {
 
   useEffect(() => { const fn=()=>setScrolled(window.scrollY>60); window.addEventListener('scroll',fn); return()=>window.removeEventListener('scroll',fn); }, []);
   useEffect(() => { slideTimer.current=setInterval(()=>setSlide(p=>(p+1)%SLIDES.length),5500); return()=>clearInterval(slideTimer.current); }, []);
+
+  /* Theme */
+  useEffect(() => {
+    const root = document.documentElement;
+    const apply = (t) => {
+      const isDark = t === 'dark' || (t === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      root.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    };
+    apply(theme);
+    localStorage.setItem('axcis-theme', theme);
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = () => { if (theme === 'system') apply('system'); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [theme]);
+
+  /* Close theme dropdown on outside click */
+  useEffect(() => {
+    if (!themeOpen) return;
+    const fn = (e) => { if (!e.target.closest('.theme-toggle')) setThemeOpen(false); };
+    document.addEventListener('mousedown', fn);
+    return () => document.removeEventListener('mousedown', fn);
+  }, [themeOpen]);
 
   const goSlide = i => { clearInterval(slideTimer.current); setSlide(i); slideTimer.current=setInterval(()=>setSlide(p=>(p+1)%SLIDES.length),5500); };
   const showToast = (msg, type='success') => { const id=Math.random().toString(36).slice(2); setToasts(p=>[...p,{id,msg,type}]); setTimeout(()=>setToasts(p=>p.filter(t=>t.id!==id)),5000); };
@@ -246,6 +271,30 @@ export default function App() {
             ))}
           </nav>
           <div className="nav__cta">
+            {/* Theme toggle */}
+            <div className="theme-toggle" style={{position:'relative'}}>
+              <button className="theme-btn" onClick={()=>setThemeOpen(!themeOpen)} aria-label="Change theme" aria-expanded={themeOpen} aria-haspopup="listbox">
+                {theme==='light'
+                  ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                  : theme==='dark'
+                  ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                  : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                }
+              </button>
+              {themeOpen && (
+                <ul className="theme-menu" role="listbox" aria-label="Select theme">
+                  {[['light','Light',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>],['dark','Dark',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>],['system','System',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>]].map(([val,label,icon])=>(
+                    <li key={val} role="option" aria-selected={theme===val}
+                      className={`theme-option${theme===val?' theme-option--active':''}`}
+                      onClick={()=>{setTheme(val);setThemeOpen(false);}}>
+                      <span className="theme-option__icon">{icon}</span>
+                      <span>{label}</span>
+                      {theme===val && <span className="theme-option__check" aria-hidden="true">✓</span>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
             <a href="mailto:support@axcisltd.co.uk" className="btn-ghost btn-sm">Support</a>
             <button className="btn-primary btn-sm" onClick={()=>nav('home','contact')}>Get in Touch <ArrowRight/></button>
           </div>
@@ -310,8 +359,8 @@ export default function App() {
                         <div key={i} className="about-feat">
                           <div className="about-feat__icon" aria-hidden="true">{f.icon}</div>
                           <div>
-                            <dt style={{fontSize:'0.95rem',fontWeight:700,marginBottom:'0.2rem',color:'#e8ecf4'}}>{f.t}</dt>
-                            <dd style={{fontSize:'0.83rem',color:'#aaa'}}>{f.d}</dd>
+                            <dt style={{fontSize:'0.95rem',fontWeight:700,marginBottom:'0.2rem',color:'var(--text-b)'}}>{f.t}</dt>
+                            <dd style={{fontSize:'0.83rem',color:'var(--text-m)'}}>{f.d}</dd>
                           </div>
                         </div>
                       ))}
@@ -345,7 +394,7 @@ export default function App() {
                 <div className="svc-detail" aria-live="polite" aria-label={`${svc.title} details`} style={{'--sc':svc.color}}>
                   <div className="svc-detail__left">
                     <h3 style={{fontSize:'2rem',marginBottom:'1rem',fontWeight:900,letterSpacing:'-0.02em'}}>{svc.title}</h3>
-                    <p style={{fontSize:'1rem',color:'#aaa',marginBottom:'2.5rem',lineHeight:1.8}}>{svc.tagline}</p>
+                    <p style={{fontSize:'1rem',color:'var(--text-m)',marginBottom:'2.5rem',lineHeight:1.8}}>{svc.tagline}</p>
                     <button className="btn-primary" style={{marginTop:'auto'}} onClick={()=>nav('home','contact')}>Request This Service <ArrowRight/></button>
                   </div>
                   <ul className="svc-detail__feats" aria-label={`${svc.title} features`}>
@@ -403,7 +452,7 @@ export default function App() {
                   <div className="collab-hero__text">
                     <p className="sec-tag" aria-hidden="true">Strategic Collaboration</p>
                     <h2 className="sec-h2">Let's Build Something<br/>Extraordinary Together</h2>
-                    <p style={{fontSize:'1.05rem',lineHeight:1.85,maxWidth:560,color:'#aaa'}}>AXCIS is a fast-growing UK technology company with global ambitions. We are actively seeking IT service providers, technology companies, and field operations firms to collaborate on projects, share capacity, and grow together.</p>
+                    <p style={{fontSize:'1.05rem',lineHeight:1.85,maxWidth:560,color:'var(--text-m)'}}>AXCIS is a fast-growing UK technology company with global ambitions. We are actively seeking IT service providers, technology companies, and field operations firms to collaborate on projects, share capacity, and grow together.</p>
                     <div style={{display:'flex',gap:'1rem',marginTop:'2rem',flexWrap:'wrap'}}>
                       <button className="btn-primary" onClick={()=>nav('home','contact')}>Start a Conversation <ArrowRight/></button>
                       <a href="mailto:contact@axcisltd.co.uk" className="btn-ghost">contact@axcisltd.co.uk</a>
@@ -411,14 +460,14 @@ export default function App() {
                   </div>
                   <div className="collab-hero__visual" aria-hidden="true">
                     <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
-                      <circle cx="160" cy="160" r="130" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="4 6"/>
-                      <circle cx="160" cy="160" r="90" stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="3 5"/>
-                      <circle cx="160" cy="160" r="50" stroke="rgba(255,255,255,0.12)" strokeWidth="1"/>
-                      <rect x="130" y="140" width="60" height="40" rx="6" fill="#111" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"/>
-                      <text x="160" y="165" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="800" fontFamily="Outfit,sans-serif">AXCIS</text>
+                      <circle cx="160" cy="160" r="130" className="collab-orbit-ring" stroke="rgba(0,102,255,0.25)" strokeWidth="1" strokeDasharray="4 6"/>
+                      <circle cx="160" cy="160" r="90" className="collab-orbit-ring" stroke="rgba(0,102,255,0.18)" strokeWidth="1" strokeDasharray="3 5"/>
+                      <circle cx="160" cy="160" r="50" className="collab-orbit-ring" stroke="rgba(0,102,255,0.35)" strokeWidth="1.5"/>
+                      <rect x="130" y="140" width="60" height="40" rx="6" className="collab-orbit-center" fill="#0066ff" stroke="#0044cc" strokeWidth="1.5"/>
+                      <text x="160" y="165" textAnchor="middle" className="collab-orbit-center-text" fill="#fff" fontSize="11" fontWeight="800" fontFamily="Outfit,sans-serif">AXCIS</text>
                       {[{a:0,l:'IT Firms'},{a:60,l:'MSPs'},{a:120,l:'Resellers'},{a:180,l:'Field Ops'},{a:240,l:'Tech Vendors'},{a:300,l:'Consultants'}].map(({a,l})=>{
                         const r=(a*Math.PI)/180,x=160+130*Math.cos(r),y=160+130*Math.sin(r),lx=160+90*Math.cos(r),ly=160+90*Math.sin(r);
-                        return(<g key={l}><line x1={lx} y1={ly} x2={x} y2={y} stroke="rgba(255,255,255,0.15)" strokeWidth="1"/><circle cx={x} cy={y} r="22" fill="#111" stroke="rgba(255,255,255,0.2)" strokeWidth="1"/><text x={x} y={y+4} textAnchor="middle" fill="#aaa" fontSize="7.5" fontWeight="600" fontFamily="Outfit,sans-serif">{l}</text></g>);
+                        return(<g key={l}><line x1={lx} y1={ly} x2={x} y2={y} className="collab-orbit-line" stroke="rgba(0,102,255,0.4)" strokeWidth="1"/><circle cx={x} cy={y} r="22" className="collab-orbit-node" fill="#0066ff" stroke="#0044cc" strokeWidth="1.5"/><text x={x} y={y+4} textAnchor="middle" className="collab-orbit-text" fill="#fff" fontSize="7.5" fontWeight="700" fontFamily="Outfit,sans-serif">{l}</text></g>);
                       })}
                     </svg>
                   </div>
@@ -441,7 +490,7 @@ export default function App() {
                   {[{n:'01',t:'Fast Deal Cycles',d:'No lengthy procurement. We move at startup speed — decisions made in days, not months.'},{n:'02',t:'Direct Access',d:'Work directly with AXCIS leadership. No account managers, no middlemen.'},{n:'03',t:'Global Reach',d:'Tap into our 100+ country operational network to deliver projects anywhere.'},{n:'04',t:'Long-Term Vision',d:'We are building for decades. Our partnerships are designed to grow with us.'}].map(p=>(
                     <li key={p.n} className="collab-why__point">
                       <span className="collab-why__num" aria-hidden="true">{p.n}</span>
-                      <div><h3 style={{fontSize:'0.95rem',marginBottom:'0.3rem',color:'#e2e8f4'}}>{p.t}</h3><p style={{fontSize:'0.85rem',color:'#aaa'}}>{p.d}</p></div>
+                      <div><h3 style={{fontSize:'0.95rem',marginBottom:'0.3rem',color:'var(--text-b)'}}>{p.t}</h3><p style={{fontSize:'0.85rem',color:'var(--text-m)'}}>{p.d}</p></div>
                     </li>
                   ))}
                 </ul>
@@ -535,7 +584,7 @@ export default function App() {
                   <li key={i} className="perk-card">
                     <div className="perk-card__icon" aria-hidden="true">{p.icon}</div>
                     <h2 style={{fontSize:'1rem',marginBottom:'0.4rem'}}>{p.t}</h2>
-                    <p style={{fontSize:'0.85rem',color:'#aaa'}}>{p.d}</p>
+                    <p style={{fontSize:'0.85rem',color:'var(--text-m)'}}>{p.d}</p>
                   </li>
                 ))}
               </ul>
@@ -556,7 +605,10 @@ export default function App() {
               <div className="general-apply">
                 <div>
                   <h2 style={{fontSize:'1.3rem',marginBottom:'0.5rem'}}>Don't see your role?</h2>
-                  <p style={{color:'#aaa'}}>We are always looking for exceptional talent. Send us your CV and we will be in touch.</p>
+                  <p style={{color:'var(--text-m)'}}>We are always looking for exceptional talent. Send us your CV and we will be in touch.</p>
+                  <p style={{fontSize:'0.85rem',marginTop:'0.4rem'}}>
+                    <a href="mailto:careers@axcisltd.co.uk" style={{color:'#0066ff',fontWeight:600}}>careers@axcisltd.co.uk</a>
+                  </p>
                 </div>
                 <a href="mailto:contact@axcisltd.co.uk?subject=General Application" className="btn-primary">Send Your CV <ArrowRight/></a>
               </div>
