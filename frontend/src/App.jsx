@@ -195,6 +195,24 @@ export default function App() {
   useEffect(() => { const fn=()=>setScrolled(window.scrollY>60); window.addEventListener('scroll',fn); return()=>window.removeEventListener('scroll',fn); }, []);
   useEffect(() => { slideTimer.current=setInterval(()=>setSlide(p=>(p+1)%SLIDES.length),5500); return()=>clearInterval(slideTimer.current); }, []);
 
+  /* Lock body scroll when mobile menu is open */
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [menuOpen]);
+
   /* Theme */
   useEffect(() => {
     const root = document.documentElement;
