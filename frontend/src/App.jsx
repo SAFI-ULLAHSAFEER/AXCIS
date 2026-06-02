@@ -24,9 +24,9 @@ const PhoneDevIco  = () => <svg width="20" height="20" viewBox="0 0 24 24" fill=
 
 /* ─── AXCIS LOGO ─────────────────────────────────────────────────────────── */
 const AxcisLogo = ({ size = 'md' }) => {
-  const s = size === 'lg' ? 48 : size === 'sm' ? 30 : 38;
-  const fs = size === 'lg' ? 30 : size === 'sm' ? 19 : 24;
-  const gap = size === 'sm' ? '0.45rem' : '0.65rem';
+  const s = size === 'lg' ? 52 : size === 'sm' ? 34 : 42;
+  const fs = size === 'lg' ? 32 : size === 'sm' ? 21 : 26;
+  const gap = size === 'sm' ? '0.5rem' : '0.7rem';
   return (
     <span style={{ display:'flex', alignItems:'center', gap, userSelect:'none' }} aria-label="AXCIS">
       <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
@@ -321,6 +321,9 @@ export default function App() {
           </button>
         </div>
         <nav id="mobile-nav" className={`nav__mobile${menuOpen?' nav__mobile--open':''}`} aria-label="Mobile navigation" aria-hidden={!menuOpen}>
+          <div className="mobile-menu-header">
+            <AxcisLogo/>
+          </div>
           {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
             <button key={label} className="nav__mobile-link" onClick={()=>nav(pg,hash)} tabIndex={menuOpen?0:-1}>{label}</button>
           ))}
