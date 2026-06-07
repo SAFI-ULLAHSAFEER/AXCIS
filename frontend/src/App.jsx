@@ -24,41 +24,53 @@ const PhoneDevIco  = () => <svg width="20" height="20" viewBox="0 0 24 24" fill=
 
 /* ─── AXCIS LOGO ─────────────────────────────────────────────────────────── */
 const AxcisLogo = ({ size = 'md' }) => {
-  const s = size === 'lg' ? 52 : size === 'sm' ? 34 : 42;
-  const fs = size === 'lg' ? 32 : size === 'sm' ? 21 : 26;
-  const gap = size === 'sm' ? '0.5rem' : '0.7rem';
+  // Logo specifications from design document
+  const getIconSize = () => {
+    // Icon height: 40px base (matches design spec)
+    if (size === 'lg') return '48px';
+    if (size === 'sm') return '32px';
+    return '40px'; // Default - per spec
+  };
+  
+  const getTextSize = () => {
+    // Text matched to icon height
+    if (size === 'lg') return '48px';
+    if (size === 'sm') return '32px';
+    return '40px'; // Matched to icon per spec
+  };
+  
   return (
-    <span style={{ display:'flex', alignItems:'center', gap, userSelect:'none' }} aria-label="AXCIS">
-      <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <defs>
-          <filter id="lgo-glow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <rect x="2" y="2" width="96" height="96" rx="22" ry="22" fill="#000000" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5"/>
-        <line x1="50" y1="17" x2="50" y2="35" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="50" y1="65" x2="50" y2="83" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="17" y1="50" x2="35" y2="50" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="65" y1="50" x2="83" y2="50" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="24" y1="24" x2="37" y2="37" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="63" y1="63" x2="76" y2="76" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="76" y1="24" x2="63" y2="37" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <line x1="24" y1="76" x2="37" y2="63" stroke="white" strokeWidth="6.5" strokeLinecap="round"/>
-        <circle cx="50" cy="50" r="4.5" fill="#0066ff" filter="url(#lgo-glow)"/>
-      </svg>
-      <svg width={fs * 4.4} height={fs * 1.3} viewBox="0 0 148 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <defs>
-          <linearGradient id="wm-g" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#ffffff"/>
-            <stop offset="50%" stopColor="#d0d6e8"/>
-            <stop offset="100%" stopColor="#8892aa"/>
-          </linearGradient>
-        </defs>
-        <text x="2" y="34" fill="#ffffff" fontSize="36" fontWeight="900" className="axcis-wordmark"
-          fontFamily="'Outfit','Inter',sans-serif" letterSpacing="5">AXCIS</text>
-      </svg>
-    </span>
+    <div style={{ 
+      display: 'flex', 
+      alignItems: 'center', 
+      gap: '12px', // 10px gap per spec (calibrated)
+      userSelect: 'none',
+      height: '40px' // Fixed height for consistency
+    }}>
+      {/* Icon - 40px height, 16px vertical padding */}
+      <img 
+        src="/axcis-icon.png" 
+        alt="AXCIS Icon" 
+        style={{ 
+          height: getIconSize(),
+          width: 'auto',
+          objectFit: 'contain',
+          display: 'block'
+        }}
+      />
+      {/* Text - AXCIS Regular font, #FFFFFF, matched height */}
+      <div style={{ 
+        fontFamily: "'Outfit', sans-serif", // Geometric sans-serif
+        fontSize: getTextSize(),
+        fontWeight: 400, // Regular weight per spec
+        color: '#FFFFFF',
+        letterSpacing: '0.02em',
+        lineHeight: 1,
+        whiteSpace: 'nowrap'
+      }}>
+        AXCIS
+      </div>
+    </div>
   );
 };
 
