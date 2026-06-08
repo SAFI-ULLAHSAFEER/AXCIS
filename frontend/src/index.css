@@ -245,15 +245,21 @@ p{color:var(--text-m);line-height:1.75}
 .topbar__item:hover{color:var(--cyan)}
 .topbar__right{display:flex;align-items:center;gap:0.75rem;color:var(--text-m);font-size:0.72rem}
 .topbar__sep{width:1px;height:12px;background:var(--border)}
-.nav__inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;height:72px;padding:0 40px}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;height:140px;padding:0 40px}
 @media(max-width:1200px){.nav__inner{padding:0 2rem}}
 @media(max-width:1000px){.topbar{display:none}}
 .nav__logo{flex-shrink:0;cursor:pointer;text-decoration:none;transition:opacity 0.3s ease;display:flex;align-items:center}
 .nav__logo:hover{opacity:0.85}
 .nav__logo:focus-visible{outline:2px solid rgba(0,102,255,0.8);outline-offset:4px;border-radius:8px}
-@media(min-width:1200px){.nav__logo img{height:44px !important}}
+
+/* Brand logo block */
+.brand-logo-block{display:flex;align-items:center;user-select:none}
+.brand-logo-block span{color:#FFFFFF;transition:color 0.3s}
+[data-theme="light"] .brand-logo-block span{color:#000000 !important}
 @media(max-width:768px){
-  .nav__inner{height:64px}
+  .nav__inner{height:100px}
+  .brand-logo-block img{height:90px !important;width:auto !important}
+  .brand-logo-block span{font-size:24px !important}
 }
 .nav__links{display:flex;align-items:center;gap:32px;margin-left:auto}
 .nav__link{font-size:0.875rem;font-weight:500;color:#ccc;cursor:pointer;transition:color 0.2s;white-space:nowrap;background:none;border:none;padding:0;font-family:'Outfit',sans-serif;text-transform:uppercase;letter-spacing:0.05em}

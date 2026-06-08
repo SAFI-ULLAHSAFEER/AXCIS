@@ -24,52 +24,59 @@ const PhoneDevIco  = () => <svg width="20" height="20" viewBox="0 0 24 24" fill=
 
 /* ─── AXCIS LOGO ─────────────────────────────────────────────────────────── */
 const AxcisLogo = ({ size = 'md' }) => {
-  // Logo specifications from design document
+  // Large icon + text for prominent branding
   const getIconSize = () => {
-    // Icon height: 40px base (matches design spec)
-    if (size === 'lg') return '48px';
-    if (size === 'sm') return '32px';
-    return '40px'; // Default - per spec
+    if (size === 'lg') return '140px';
+    if (size === 'sm') return '95px';
+    return '130px'; // 130px - very prominent
   };
   
   const getTextSize = () => {
-    // Text matched to icon height
-    if (size === 'lg') return '48px';
-    if (size === 'sm') return '32px';
-    return '40px'; // Matched to icon per spec
+    if (size === 'lg') return '32px';
+    if (size === 'sm') return '24px';
+    return '28px'; // Original deployed size
+  };
+  
+  const getGap = () => {
+    if (size === 'lg') return '2px';
+    if (size === 'sm') return '2px';
+    return '2px'; // Almost no gap - text right next to icon
   };
   
   return (
-    <div style={{ 
-      display: 'flex', 
-      alignItems: 'center', 
-      gap: '12px', // 10px gap per spec (calibrated)
-      userSelect: 'none',
-      height: '40px' // Fixed height for consistency
-    }}>
-      {/* Icon - 40px height, 16px vertical padding */}
+    <div 
+      className="brand-logo-block"
+      style={{ 
+        display: 'flex', 
+        alignItems: 'center',
+        gap: getGap(),
+        userSelect: 'none'
+      }}
+    >
       <img 
         src="/axcis-icon.png" 
-        alt="AXCIS Icon" 
+        alt="AXCIS" 
         style={{ 
           height: getIconSize(),
           width: 'auto',
-          objectFit: 'contain',
-          display: 'block'
+          display: 'block',
+          flexShrink: 0
         }}
       />
-      {/* Text - AXCIS Regular font, #FFFFFF, matched height */}
-      <div style={{ 
-        fontFamily: "'Outfit', sans-serif", // Geometric sans-serif
-        fontSize: getTextSize(),
-        fontWeight: 400, // Regular weight per spec
-        color: '#FFFFFF',
-        letterSpacing: '0.02em',
-        lineHeight: 1,
-        whiteSpace: 'nowrap'
-      }}>
+      <span 
+        style={{ 
+          fontSize: getTextSize(),
+          fontWeight: 700,
+          letterSpacing: '0.05em',
+          color: '#FFFFFF',
+          textTransform: 'uppercase',
+          lineHeight: 1,
+          fontFamily: "'Outfit', sans-serif",
+          whiteSpace: 'nowrap'
+        }}
+      >
         AXCIS
-      </div>
+      </span>
     </div>
   );
 };
