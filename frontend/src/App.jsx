@@ -21,15 +21,29 @@ const useScrollReveal = () => {
       });
     }, observerOptions);
 
-    // Observe all scroll-reveal elements
-    const revealElements = document.querySelectorAll(
-      '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
-    );
-    
-    revealElements.forEach(el => observer.observe(el));
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      // Observe all scroll-reveal elements
+      const revealElements = document.querySelectorAll(
+        '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+      );
+      
+      revealElements.forEach(el => {
+        observer.observe(el);
+        // Immediately show elements that are already in viewport
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('is-visible');
+        }
+      });
+    }, 100);
 
     // Cleanup
     return () => {
+      clearTimeout(timeoutId);
+      const revealElements = document.querySelectorAll(
+        '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+      );
       revealElements.forEach(el => observer.unobserve(el));
     };
   }, []);
@@ -217,7 +231,26 @@ export default function App() {
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
 
-  // Enable scroll-triggered animations
+  // Enable scroll-triggered animations (re-run when page changes)
+  useEffect(() => {
+    // Small delay to ensure page content is rendered
+    const timeoutId = setTimeout(() => {
+      const revealElements = document.querySelectorAll(
+        '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+      );
+      
+      revealElements.forEach(el => {
+        // Check if element is in viewport
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('is-visible');
+        }
+      });
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [page]); // Re-run when page changes
+
   useScrollReveal();
   const [slide, setSlide]       = useState(0);
   const [activeSvc, setActiveSvc] = useState('support');
