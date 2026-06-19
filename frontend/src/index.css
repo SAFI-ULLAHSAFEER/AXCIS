@@ -321,10 +321,10 @@ p{color:var(--text-m);line-height:1.8;font-size:1.05rem}
 ══════════════════════════════════════════════════════ */
 /* Grid — 1px gap creates thin white dividers between cells */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.07);margin-bottom:0}
-.svc-card{position:relative;overflow:hidden;background:#000;padding:2.5rem 2rem 3.5rem;cursor:pointer;transition:background 0.2s;border:none;border-radius:0}
-.svc-card:hover{background:#0d0d0d}
-.svc-card--active{background:#0d0d0d}
-.svc-card--active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#fff}
+.svc-card{position:relative;overflow:hidden;background:#000;padding:2.5rem 2rem 3.5rem;cursor:pointer;transition:all 0.3s ease;border:none;border-radius:0}
+.svc-card:hover{background:#0d0d0d;transform:translateY(-2px)}
+.svc-card--active{background:#0d0d0d;animation:pulse 2s infinite}
+.svc-card--active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#10b981 0%,#34d399 100%);box-shadow:0 0 10px rgba(16,185,129,0.5)}
 /* Hide icon box and category label */
 .svc-card__icon{display:none}
 .svc-card__cat{display:none}
@@ -830,6 +830,19 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
   }
 }
 
+/* Pulse animation for active service card */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
 /* Apply animations to elements */
 .hero-sec { animation: fadeIn 0.8s ease-out; }
 .hero-h1 { animation: fadeInUp 0.8s ease-out 0.1s backwards; }
@@ -862,6 +875,21 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
 .svc-card:nth-child(5) { animation-delay: 0.2s; }
 .svc-card:nth-child(6) { animation-delay: 0.25s; }
 .svc-detail { animation: fadeInUp 0.6s ease-out; }
+
+/* Service detail features with stagger */
+.svc-detail__feat { animation: slideInLeft 0.4s ease-out backwards; }
+.svc-detail__feat:nth-child(1) { animation-delay: 0.1s; }
+.svc-detail__feat:nth-child(2) { animation-delay: 0.15s; }
+.svc-detail__feat:nth-child(3) { animation-delay: 0.2s; }
+.svc-detail__feat:nth-child(4) { animation-delay: 0.25s; }
+.svc-detail__feat:nth-child(5) { animation-delay: 0.3s; }
+.svc-detail__feat:nth-child(6) { animation-delay: 0.35s; }
+
+/* Service detail left panel */
+.svc-detail__left { animation: slideInLeft 0.6s ease-out; }
+.svc-detail__left h3 { animation: fadeInUp 0.6s ease-out 0.1s backwards; }
+.svc-detail__left p { animation: fadeInUp 0.6s ease-out 0.2s backwards; }
+.svc-detail__left button { animation: fadeInUp 0.6s ease-out 0.3s backwards; }
 
 .ind-card { animation: scaleIn 0.5s ease-out backwards; }
 .ind-card:nth-child(1) { animation-delay: 0s; }
