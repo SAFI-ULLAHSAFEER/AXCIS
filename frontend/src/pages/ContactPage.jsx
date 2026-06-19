@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin } from '../icons';
 import { COMPANY } from '../constants/company';
 import ContactForm from '../components/ContactForm';
 
+// Contact Page with Map Location
 export default function ContactPage() {
   const [params] = useSearchParams();
   const type = params.get('type');

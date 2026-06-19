@@ -486,14 +486,14 @@ export default function App() {
                   </div>
                   <div className="collab-hero__visual" aria-hidden="true">
                     <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
-                      <circle cx="160" cy="160" r="130" className="collab-orbit-ring" stroke="rgba(0,102,255,0.25)" strokeWidth="1" strokeDasharray="4 6"/>
-                      <circle cx="160" cy="160" r="90" className="collab-orbit-ring" stroke="rgba(0,102,255,0.18)" strokeWidth="1" strokeDasharray="3 5"/>
-                      <circle cx="160" cy="160" r="50" className="collab-orbit-ring" stroke="rgba(0,102,255,0.35)" strokeWidth="1.5"/>
-                      <rect x="130" y="140" width="60" height="40" rx="6" className="collab-orbit-center" fill="#0066ff" stroke="#0044cc" strokeWidth="1.5"/>
+                      <circle cx="160" cy="160" r="130" className="collab-orbit-ring" stroke="rgba(16,185,129,0.25)" strokeWidth="1" strokeDasharray="4 6"/>
+                      <circle cx="160" cy="160" r="90" className="collab-orbit-ring" stroke="rgba(16,185,129,0.18)" strokeWidth="1" strokeDasharray="3 5"/>
+                      <circle cx="160" cy="160" r="50" className="collab-orbit-ring" stroke="rgba(16,185,129,0.35)" strokeWidth="1.5"/>
+                      <rect x="130" y="140" width="60" height="40" rx="6" className="collab-orbit-center" fill="#10b981" stroke="#059669" strokeWidth="1.5"/>
                       <text x="160" y="165" textAnchor="middle" className="collab-orbit-center-text" fill="#fff" fontSize="11" fontWeight="800" fontFamily="Outfit,sans-serif">AXCIS</text>
                       {[{a:0,l:'IT Firms'},{a:60,l:'MSPs'},{a:120,l:'Resellers'},{a:180,l:'Field Ops'},{a:240,l:'Tech Vendors'},{a:300,l:'Consultants'}].map(({a,l})=>{
                         const r=(a*Math.PI)/180,x=160+130*Math.cos(r),y=160+130*Math.sin(r),lx=160+90*Math.cos(r),ly=160+90*Math.sin(r);
-                        return(<g key={l}><line x1={lx} y1={ly} x2={x} y2={y} className="collab-orbit-line" stroke="rgba(0,102,255,0.4)" strokeWidth="1"/><circle cx={x} cy={y} r="22" className="collab-orbit-node" fill="#0066ff" stroke="#0044cc" strokeWidth="1.5"/><text x={x} y={y+4} textAnchor="middle" className="collab-orbit-text" fill="#fff" fontSize="7.5" fontWeight="700" fontFamily="Outfit,sans-serif">{l}</text></g>);
+                        return(<g key={l}><line x1={lx} y1={ly} x2={x} y2={y} className="collab-orbit-line" stroke="rgba(16,185,129,0.4)" strokeWidth="1"/><circle cx={x} cy={y} r="22" className="collab-orbit-node" fill="#10b981" stroke="#059669" strokeWidth="1.5"/><text x={x} y={y+4} textAnchor="middle" className="collab-orbit-text" fill="#fff" fontSize="7.5" fontWeight="700" fontFamily="Outfit,sans-serif">{l}</text></g>);
                       })}
                     </svg>
                   </div>
@@ -610,7 +610,7 @@ export default function App() {
                       <div>
                         <p className="contact-info__label">{item.label}</p>
                         {item.href
-                          ? <a href={item.href} className="contact-info__val" style={{color:'#0066ff'}}>{item.val}</a>
+                          ? <a href={item.href} className="contact-info__val" style={{color:'#ffffff'}}>{item.val}</a>
                           : <p className="contact-info__val">{item.val}</p>}
                       </div>
                     </div>
@@ -656,6 +656,45 @@ export default function App() {
               </div>
             </div>
           </section>
+
+          {/* MAP LOCATION - Vector.ai Style */}
+          <section className="location-map-section">
+            <div className="container">
+              <div className="location-map-header">
+                <p className="sec-tag">Locate Us</p>
+                <h2 className="sec-h2">Our Location</h2>
+                <p style={{textAlign:'center',maxWidth:'600px',margin:'0 auto 2.5rem',color:'var(--text-m)'}}>
+                  Visit our office in Hatfield, United Kingdom
+                </p>
+              </div>
+              <div className="location-map-container">
+                <a 
+                  href="https://maps.app.goo.gl/4iBi9sW3mLKrgoM38" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="location-map-link"
+                  aria-label="View our location on Google Maps"
+                >
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!4v1781862622412!6m8!1m7!1s7CrAJCMpquRKw5YbnQlV7g!2m2!1d51.87310624558452!2d-0.4193536509153122!3f217.69347!4f0!5f0.7820865974627469" 
+                    width="100%" 
+                    height="500" 
+                    style={{border:0,borderRadius:'var(--r-lg)',display:'block'}} 
+                    allowFullScreen="" 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="AXCIS Office Location - Hatfield, United Kingdom"
+                  />
+                  <div className="map-overlay">
+                    <span className="map-overlay-text">
+                      <MapPinIco style={{width:'20px',height:'20px'}}/>
+                      Open in Google Maps
+                    </span>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </section>
         </main>
       )}
 
@@ -697,7 +736,7 @@ export default function App() {
                   <h2 style={{fontSize:'1.3rem',marginBottom:'0.5rem'}}>Don't see your role?</h2>
                   <p style={{color:'var(--text-m)'}}>We are always looking for exceptional talent. Send us your CV and we will be in touch.</p>
                   <p style={{fontSize:'0.85rem',marginTop:'0.4rem'}}>
-                    <a href="mailto:careers@axcisltd.co.uk" style={{color:'#0066ff',fontWeight:600}}>careers@axcisltd.co.uk</a>
+                    <a href="mailto:careers@axcisltd.co.uk" style={{color:'#ffffff',fontWeight:600}}>careers@axcisltd.co.uk</a>
                   </p>
                 </div>
                 <a href="mailto:contact@axcisltd.co.uk?subject=General Application" className="btn-primary">Send Your CV <ArrowRight/></a>
