@@ -2,6 +2,39 @@ import React, { useState, useEffect, useRef } from 'react';
 import CaseStudyPage from './pages/CaseStudyPage';
 import { CASE_STUDIES } from './constants/homepage';
 
+/* ─── SCROLL REVEAL HOOK ─────────────────────────────────────────────────── */
+const useScrollReveal = () => {
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // Optional: unobserve after animation (one-time animation)
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all scroll-reveal elements
+    const revealElements = document.querySelectorAll(
+      '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+    );
+    
+    revealElements.forEach(el => observer.observe(el));
+
+    // Cleanup
+    return () => {
+      revealElements.forEach(el => observer.unobserve(el));
+    };
+  }, []);
+};
+
 /* ─── ICONS ─────────────────────────────────────────────────────────────── */
 const ArrowRight   = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
 const MenuIcon     = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
@@ -183,6 +216,9 @@ export default function App() {
   const [page, setPage]           = useState('home');
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
+
+  // Enable scroll-triggered animations
+  useScrollReveal();
   const [slide, setSlide]       = useState(0);
   const [activeSvc, setActiveSvc] = useState('support');
   const [toasts, setToasts]     = useState([]);
@@ -362,7 +398,7 @@ export default function App() {
           </section>
 
           {/* ABOUT */}
-          <section id="about" className="sec-pad" aria-labelledby="about-heading">
+          <section id="about" className="sec-pad scroll-reveal" aria-labelledby="about-heading">
             <div className="container">
               <div className="about-grid">
                 <div className="about-left">
@@ -398,7 +434,7 @@ export default function App() {
           </section>
 
           {/* SERVICES */}
-          <section id="services" className="sec-pad sec-alt" aria-labelledby="services-heading">
+          <section id="services" className="sec-pad sec-alt scroll-reveal" aria-labelledby="services-heading">
             <div className="container">
               <div className="sec-head">
                 <p className="sec-tag" aria-hidden="true">Our Capabilities</p>
@@ -437,7 +473,7 @@ export default function App() {
           </section>
 
           {/* INDUSTRIES */}
-          <section id="industries" className="sec-pad" aria-labelledby="industries-heading">
+          <section id="industries" className="sec-pad scroll-reveal" aria-labelledby="industries-heading">
             <div className="container">
               <div className="sec-head">
                 <p className="sec-tag" aria-hidden="true">Industries We Serve</p>
@@ -455,7 +491,7 @@ export default function App() {
           </section>
 
           {/* WHY AXCIS + COLLABORATE */}
-          <section id="why" className="sec-pad" aria-labelledby="why-heading">
+          <section id="why" className="sec-pad scroll-reveal" aria-labelledby="why-heading">
             <div className="container">
               <div className="sec-head">
                 <p className="sec-tag" aria-hidden="true">Why AXCIS</p>
@@ -525,7 +561,7 @@ export default function App() {
           </section>
 
           {/* CASE STUDIES */}
-          <section id="case-studies" className="sec-pad" aria-labelledby="case-studies-heading" style={{background:'linear-gradient(180deg, var(--bg-main) 0%, #001125 100%)'}}>
+          <section id="case-studies" className="sec-pad scroll-reveal" aria-labelledby="case-studies-heading" style={{background:'linear-gradient(180deg, var(--bg-main) 0%, #001125 100%)'}}>
             <div className="container">
               <div className="sec-head">
                 <p className="sec-tag" aria-hidden="true">Case Studies</p>
@@ -589,7 +625,7 @@ export default function App() {
           </section>
 
           {/* CONTACT */}
-          <section id="contact" className="sec-pad sec-alt" aria-labelledby="contact-heading">
+          <section id="contact" className="sec-pad sec-alt scroll-reveal" aria-labelledby="contact-heading">
             <div className="container">
               <div className="sec-head">
                 <p className="sec-tag" aria-hidden="true">Get in Touch</p>
@@ -658,7 +694,7 @@ export default function App() {
           </section>
 
           {/* MAP LOCATION - Vector.ai Style */}
-          <section className="location-map-section">
+          <section className="location-map-section scroll-reveal-scale">
             <div className="container">
               <div className="location-map-header">
                 <p className="sec-tag">Locate Us</p>
