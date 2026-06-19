@@ -3,8 +3,11 @@ import CaseStudyPage from './pages/CaseStudyPage';
 import { CASE_STUDIES } from './constants/homepage';
 
 /* ─── SCROLL REVEAL HOOK ─────────────────────────────────────────────────── */
-const useScrollReveal = () => {
+const useScrollReveal = (page) => {
   useEffect(() => {
+    // Only run on home page
+    if (page !== 'home') return;
+
     const observerOptions = {
       root: null,
       rootMargin: '-50px',
@@ -15,8 +18,6 @@ const useScrollReveal = () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
-          // Optional: unobserve after animation (one-time animation)
-          // observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
@@ -46,7 +47,7 @@ const useScrollReveal = () => {
       );
       revealElements.forEach(el => observer.unobserve(el));
     };
-  }, []);
+  }, [page]);
 };
 
 /* ─── ICONS ─────────────────────────────────────────────────────────────── */
@@ -231,8 +232,11 @@ export default function App() {
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
 
-  // Enable scroll-triggered animations (re-run when page changes)
+  // Enable scroll-triggered animations (only on home page)
   useEffect(() => {
+    // Only run on home page
+    if (page !== 'home') return;
+    
     // Small delay to ensure page content is rendered
     const timeoutId = setTimeout(() => {
       const revealElements = document.querySelectorAll(
@@ -249,9 +253,9 @@ export default function App() {
     }, 50);
 
     return () => clearTimeout(timeoutId);
-  }, [page]); // Re-run when page changes
+  }, [page]);
 
-  useScrollReveal();
+  useScrollReveal(page);
   const [slide, setSlide]       = useState(0);
   const [activeSvc, setActiveSvc] = useState('support');
   const [toasts, setToasts]     = useState([]);

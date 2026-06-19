@@ -1115,55 +1115,45 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
 
 /* ══════════════════════════════════════════════════════
    SCROLL-TRIGGERED ANIMATIONS (Vector.ai Style)
+   Only applies to home page sections
 ══════════════════════════════════════════════════════ */
 
-/* Initial state - hidden before scroll (but only if page is scrolled) */
-.scroll-reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-reveal:not(.is-visible) {
-  opacity: 0;
-  transform: translateY(40px);
-}
-
-.scroll-reveal-left {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-reveal-left:not(.is-visible) {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-
-.scroll-reveal-right {
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.scroll-reveal-right:not(.is-visible) {
-  opacity: 0;
-  transform: translateX(40px);
-}
-
+/* Initial state - visible by default */
+.scroll-reveal,
+.scroll-reveal-left,
+.scroll-reveal-right,
 .scroll-reveal-scale {
   opacity: 1;
-  transform: scale(1);
+  transform: none;
+}
+
+/* Only hide if on home page and not yet visible */
+#main-content:not(.case-study-page) .scroll-reveal:not(.is-visible) {
+  opacity: 0;
+  transform: translateY(40px);
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.scroll-reveal-scale:not(.is-visible) {
+#main-content:not(.case-study-page) .scroll-reveal-left:not(.is-visible) {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#main-content:not(.case-study-page) .scroll-reveal-right:not(.is-visible) {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#main-content:not(.case-study-page) .scroll-reveal-scale:not(.is-visible) {
   opacity: 0;
   transform: scale(0.9);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Active state - visible after scroll */
@@ -1173,6 +1163,8 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
 .scroll-reveal-scale.is-visible {
   opacity: 1 !important;
   transform: translateY(0) translateX(0) scale(1) !important;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Stagger delays for child elements */
