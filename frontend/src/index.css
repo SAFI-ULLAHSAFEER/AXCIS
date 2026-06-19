@@ -770,3 +770,192 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
 .case-study-page .cs-cta {
   background: transparent !important;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   PROFESSIONAL ANIMATIONS (Vector.ai Style)
+═══════════════════════════════════════════════════════ */
+
+/* Fade in from bottom - for sections */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in - simple */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Scale in - for cards */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply animations to elements */
+.hero-sec { animation: fadeIn 0.8s ease-out; }
+.hero-h1 { animation: fadeInUp 0.8s ease-out 0.1s backwards; }
+.hero-sub { animation: fadeInUp 0.8s ease-out 0.2s backwards; }
+.hero-actions { animation: fadeInUp 0.8s ease-out 0.3s backwards; }
+
+.sec-head { animation: fadeInUp 0.8s ease-out; }
+.sec-tag { animation: fadeInUp 0.6s ease-out; }
+.sec-h2 { animation: fadeInUp 0.8s ease-out 0.1s backwards; }
+
+.about-left { animation: slideInLeft 0.8s ease-out; }
+.about-right { animation: slideInRight 0.8s ease-out 0.2s backwards; }
+.about-feat { animation: fadeInUp 0.6s ease-out backwards; }
+.about-feat:nth-child(1) { animation-delay: 0.1s; }
+.about-feat:nth-child(2) { animation-delay: 0.2s; }
+.about-feat:nth-child(3) { animation-delay: 0.3s; }
+.about-feat:nth-child(4) { animation-delay: 0.4s; }
+
+.metric-item { animation: scaleIn 0.7s ease-out backwards; }
+.metric-item:nth-child(1) { animation-delay: 0.1s; }
+.metric-item:nth-child(2) { animation-delay: 0.2s; }
+.metric-item:nth-child(3) { animation-delay: 0.3s; }
+.metric-item:nth-child(4) { animation-delay: 0.4s; }
+
+.svc-card { animation: scaleIn 0.6s ease-out backwards; }
+.svc-card:nth-child(1) { animation-delay: 0s; }
+.svc-card:nth-child(2) { animation-delay: 0.05s; }
+.svc-card:nth-child(3) { animation-delay: 0.1s; }
+.svc-card:nth-child(4) { animation-delay: 0.15s; }
+.svc-card:nth-child(5) { animation-delay: 0.2s; }
+.svc-card:nth-child(6) { animation-delay: 0.25s; }
+.svc-detail { animation: fadeInUp 0.6s ease-out; }
+
+.ind-card { animation: scaleIn 0.5s ease-out backwards; }
+.ind-card:nth-child(1) { animation-delay: 0s; }
+.ind-card:nth-child(2) { animation-delay: 0.05s; }
+.ind-card:nth-child(3) { animation-delay: 0.1s; }
+.ind-card:nth-child(4) { animation-delay: 0.15s; }
+.ind-card:nth-child(5) { animation-delay: 0.2s; }
+.ind-card:nth-child(6) { animation-delay: 0.25s; }
+.ind-card:nth-child(7) { animation-delay: 0.3s; }
+.ind-card:nth-child(8) { animation-delay: 0.35s; }
+
+.value-card { animation: scaleIn 0.6s ease-out backwards; }
+.value-card:nth-child(1) { animation-delay: 0s; }
+.value-card:nth-child(2) { animation-delay: 0.1s; }
+.value-card:nth-child(3) { animation-delay: 0.2s; }
+.value-card:nth-child(4) { animation-delay: 0.3s; }
+.value-card:nth-child(5) { animation-delay: 0.4s; }
+.value-card:nth-child(6) { animation-delay: 0.5s; }
+
+.partner-card { animation: scaleIn 0.7s ease-out backwards; }
+.partner-card:nth-child(1) { animation-delay: 0s; }
+.partner-card:nth-child(2) { animation-delay: 0.15s; }
+.partner-card:nth-child(3) { animation-delay: 0.3s; }
+.partner-card:nth-child(4) { animation-delay: 0.45s; }
+.partner-card:nth-child(5) { animation-delay: 0.6s; }
+.partner-card:nth-child(6) { animation-delay: 0.75s; }
+
+.glass-card { animation: fadeInUp 0.8s ease-out; }
+
+.collab-card { animation: scaleIn 0.7s ease-out backwards; }
+.collab-card:nth-child(1) { animation-delay: 0s; }
+.collab-card:nth-child(2) { animation-delay: 0.15s; }
+.collab-card:nth-child(3) { animation-delay: 0.3s; }
+.collab-card:nth-child(4) { animation-delay: 0.45s; }
+
+.collab-why__point { animation: fadeInUp 0.6s ease-out backwards; }
+.collab-why__point:nth-child(1) { animation-delay: 0.1s; }
+.collab-why__point:nth-child(2) { animation-delay: 0.2s; }
+.collab-why__point:nth-child(3) { animation-delay: 0.3s; }
+.collab-why__point:nth-child(4) { animation-delay: 0.4s; }
+
+.job-card { animation: scaleIn 0.6s ease-out backwards; }
+.job-card:nth-child(1) { animation-delay: 0s; }
+.job-card:nth-child(2) { animation-delay: 0.1s; }
+.job-card:nth-child(3) { animation-delay: 0.2s; }
+.job-card:nth-child(4) { animation-delay: 0.3s; }
+.job-card:nth-child(5) { animation-delay: 0.4s; }
+.job-card:nth-child(6) { animation-delay: 0.5s; }
+
+.perk-card { animation: scaleIn 0.6s ease-out backwards; }
+.perk-card:nth-child(1) { animation-delay: 0s; }
+.perk-card:nth-child(2) { animation-delay: 0.1s; }
+.perk-card:nth-child(3) { animation-delay: 0.2s; }
+.perk-card:nth-child(4) { animation-delay: 0.3s; }
+
+.contact-info { animation: slideInLeft 0.8s ease-out; }
+.contact-form-wrap { animation: slideInRight 0.8s ease-out 0.2s backwards; }
+
+.case-study-card { animation: scaleIn 0.7s ease-out backwards; }
+.case-study-card:nth-child(1) { animation-delay: 0s; }
+.case-study-card:nth-child(2) { animation-delay: 0.15s; }
+.case-study-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* Smooth transitions for all interactive elements */
+.btn-primary, .btn-ghost, .btn-sm, .btn-lg {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav__link {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover scale effect */
+.svc-card:hover, 
+.value-card:hover, 
+.collab-card:hover, 
+.partner-card:hover,
+.job-card:hover,
+.perk-card:hover,
+.case-study-card:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ind-card:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
