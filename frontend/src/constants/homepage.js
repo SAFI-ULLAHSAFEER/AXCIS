@@ -100,6 +100,19 @@ export const WHY_AXCIS = [
 
 export const CASE_STUDIES = [
   {
+    id: 'coinbase-infrastructure',
+    industry: 'Financial Services / Cryptocurrency',
+    title: 'High-Availability Infrastructure for Coinbase',
+    challenge: 'Mission-critical cryptocurrency platform requiring zero-downtime infrastructure with complex structured cabling, precise rack-and-stack operations, and reliable power distribution.',
+    outcome: 'Deployed certified field engineers to design, cable, and configure high-density server racks, enterprise switches, and robust power management systems.',
+    metrics: [
+      { value: '99.999%', label: 'Uptime achieved' },
+      { value: '<4hrs', label: 'Emergency response SLA' },
+      { value: '100%', label: 'On-site precision' },
+    ],
+    stack: ['Juniper Switches', 'APC Smart-UPS', 'Cat6a/Fiber Cabling', 'Datacenter Operations'],
+  },
+  {
     id: 'cloud-migration',
     industry: 'Financial Services',
     title: 'Multi-Cloud Migration for a Global Bank',

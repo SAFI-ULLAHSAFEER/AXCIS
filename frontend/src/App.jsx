@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import CaseStudyPage from './pages/CaseStudyPage';
+import { CASE_STUDIES } from './constants/homepage';
 
 /* ─── ICONS ─────────────────────────────────────────────────────────────── */
 const ArrowRight   = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
@@ -24,23 +26,12 @@ const PhoneDevIco  = () => <svg width="20" height="20" viewBox="0 0 24 24" fill=
 
 /* ─── AXCIS LOGO ─────────────────────────────────────────────────────────── */
 const AxcisLogo = ({ size = 'md' }) => {
-  // Large icon + text for prominent branding
-  const getIconSize = () => {
-    if (size === 'lg') return '140px';
-    if (size === 'sm') return '95px';
-    return '130px'; // 130px - very prominent
-  };
+  const [isHovered, setIsHovered] = React.useState(false);
   
-  const getTextSize = () => {
-    if (size === 'lg') return '32px';
-    if (size === 'sm') return '24px';
-    return '28px'; // Original deployed size
-  };
-  
-  const getGap = () => {
-    if (size === 'lg') return '2px';
-    if (size === 'sm') return '2px';
-    return '2px'; // Almost no gap - text right next to icon
+  const getLogoHeight = () => {
+    if (size === 'lg') return '110px';  // Navbar - EXTRA LARGE
+    if (size === 'sm') return '85px';   // Footer
+    return '100px'; // Default - BOHOT BARA
   };
   
   return (
@@ -49,30 +40,58 @@ const AxcisLogo = ({ size = 'md' }) => {
       style={{ 
         display: 'flex', 
         alignItems: 'center',
-        gap: getGap(),
-        userSelect: 'none'
+        userSelect: 'none',
+        cursor: 'pointer',
+        position: 'relative',
+        minWidth: '180px', // Space for text
+        height: getLogoHeight()
       }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
+      {/* Logo Image - Hide on hover */}
       <img 
-        src="/axcis-icon.png" 
+        src="/axcis-logo.png" 
         alt="AXCIS" 
         style={{ 
-          height: getIconSize(),
+          height: getLogoHeight(),
           width: 'auto',
           display: 'block',
-          flexShrink: 0
+          minHeight: getLogoHeight(),
+          objectFit: 'contain',
+          opacity: isHovered ? 0 : 1,
+          visibility: isHovered ? 'hidden' : 'visible',
+          transition: 'opacity 0.3s ease, visibility 0.3s ease',
+          position: 'absolute',
+          left: 0,
+          top: '50%',
+          transform: 'translateY(-50%)'
         }}
       />
-      <span 
-        style={{ 
-          fontSize: getTextSize(),
-          fontWeight: 700,
+      
+      {/* Text - Show on hover (DevInc Style) */}
+      <span
+        style={{
+          position: 'absolute',
+          left: '0',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          fontSize: size === 'lg' ? '36px' : size === 'sm' ? '28px' : '32px',
+          fontWeight: '700',
           letterSpacing: '0.05em',
-          color: '#FFFFFF',
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #10b981 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          opacity: isHovered ? 1 : 0,
+          visibility: isHovered ? 'visible' : 'hidden',
+          transition: 'opacity 0.3s ease, visibility 0.3s ease',
+          pointerEvents: 'none',
           textTransform: 'uppercase',
-          lineHeight: 1,
           fontFamily: "'Outfit', sans-serif",
-          whiteSpace: 'nowrap'
+          whiteSpace: 'nowrap',
+          zIndex: 10,
+          filter: 'drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3))'
         }}
       >
         AXCIS
@@ -107,25 +126,25 @@ const Counter = ({ to, suffix = '', prefix = '' }) => {
 
 /* ─── DATA ───────────────────────────────────────────────────────────────── */
 const SLIDES = [
-  { h1a:'The Central Axis of', h1b:'Enterprise Technology', sub:'AXCIS delivers world-class IT infrastructure, managed cloud, cybersecurity, and UK field services — all from one unified command centre.', accent:'#0066ff', cta:'Get a Free Consultation' },
-  { h1a:'Your Partner in', h1b:'Seamless IT Operations', sub:'From deskside support to datacenter management, AXCIS engineers keep your business running without interruption across every timezone.', accent:'#0066ff', cta:'Explore Services' },
-  { h1a:'Field Operations', h1b:'Under 4-Hour SLA', sub:'Certified engineers dispatched across the United Kingdom with guaranteed response times. Hardware, cabling, audits — on-site, on time.', accent:'#0066ff', cta:'Request Field Dispatch' },
-  { h1a:'Engineering', h1b:'the Future, Together', sub:'Custom software platforms, AI integrations, and zero-trust cloud architectures built for enterprises that demand global-scale performance.', accent:'#0066ff', cta:'Start a Project' },
+  { h1a:'The Central Axis of', h1b:'Enterprise Technology', sub:'AXCIS delivers world-class IT infrastructure, managed cloud, cybersecurity, and UK field services — all from one unified command centre.', accent:'#10b981', cta:'Get a Free Consultation' },
+  { h1a:'Your Partner in', h1b:'Seamless IT Operations', sub:'From deskside support to datacenter management, AXCIS engineers keep your business running without interruption across every timezone.', accent:'#10b981', cta:'Explore Services' },
+  { h1a:'Field Operations', h1b:'Under 4-Hour SLA', sub:'Certified engineers dispatched across the United Kingdom with guaranteed response times. Hardware, cabling, audits — on-site, on time.', accent:'#10b981', cta:'Request Field Dispatch' },
+  { h1a:'Engineering', h1b:'the Future, Together', sub:'Custom software platforms, AI integrations, and zero-trust cloud architectures built for enterprises that demand global-scale performance.', accent:'#10b981', cta:'Start a Project' },
 ];
 
 const SERVICES = [
-  { id:'support',    icon:<NetworkIco/>,   color:'#0066ff', title:'Global IT Support',           short:'Empowering global businesses with agile IT solutions, bridging geographical gaps seamlessly.',                                tagline:'Empowering global businesses with agile IT solutions, bridging geographical gaps seamlessly.',                                features:['Deskside support & network operations','Datacenter support & management','Multilingual helpdesk (L1–L3)','Proactive monitoring & incident response','Global fiber & edge networking solutions'] },
-  { id:'cloud',      icon:<CloudIco/>,     color:'#0066ff', title:'Cybersecurity & Cloud',        short:'Zero-trust security and managed cloud operations.',                                                                          tagline:'Continuous, zero-trust cloud orchestration engineered for maximum reliability.',                                              features:['24/7/365 Security Operations Center (SOC)','Firewall & cloud security solutions','Advanced threat intelligence & zero-trust','GDPR, ISO 27001 compliance assurance','Multi-cloud architecture & migration'] },
-  { id:'ai',         icon:<CpuIco/>,       color:'#0066ff', title:'AI & Business Automation',     short:'Intelligent automation and AI solutions for enterprise.',                                                                    tagline:'Harness the power of AI to automate workflows and unlock business intelligence.',                                             features:['AI agent development & LLM integrations','Business process automation (RPA)','Machine learning models & predictive analytics','AI-powered chatbots & virtual assistants','Data pipelines & real-time intelligence dashboards'] },
-  { id:'web',        icon:<MonitorIco/>,   color:'#0066ff', title:'Web Development & Web Apps',   short:'High-performance web applications and platforms.',                                                                           tagline:'Next-generation web applications built for scale, speed, and seamless UX.',                                                  features:['Custom web application development','React, Next.js & modern frontend frameworks','RESTful & GraphQL API development','E-commerce & enterprise portal solutions','Performance optimisation & SEO-ready architecture'] },
-  { id:'mobile',     icon:<PhoneDevIco/>,  color:'#0066ff', title:'Mobile App Development',       short:'Native and cross-platform mobile experiences.',                                                                              tagline:'Powerful mobile apps engineered for iOS, Android, and cross-platform delivery.',                                             features:['iOS & Android native app development','React Native & Flutter cross-platform apps','Mobile UI/UX design & prototyping','App Store & Google Play deployment','Push notifications, offline mode & API integration'] },
-  { id:'software',   icon:<ZapIco/>,       color:'#0066ff', title:'Software Engineering',         short:'Custom enterprise software built to scale.',                                                                                 tagline:'Bespoke software solutions architected for enterprise-grade performance.',                                                   features:['Custom enterprise software development','Microservices & API architecture','DevOps, CI/CD & cloud-native delivery','Legacy system modernisation','Real-time analytics & business intelligence'] },
-  { id:'cabling',    icon:<NetworkIco/>,   color:'#0066ff', title:'Infrastructure Cabling',       short:'Efficient IT infrastructure cabling solutions, ensuring seamless connectivity and optimal performance.',                     tagline:'Efficient IT infrastructure cabling solutions, ensuring seamless connectivity and optimal performance.',                     features:['Structured cabling design & installation','Fibre optic & copper cabling solutions','Patch panel & rack cabling management','Cable testing, certification & documentation','Network infrastructure upgrades & migrations'] },
-  { id:'datacenter', icon:<ServerIco/>,    color:'#0066ff', title:'Datacenter Services',          short:'Flexible engineering support for seamless datacenter operations and hardware maintenance.',                                  tagline:'Flexible engineering support for seamless operations, server-based systems and hardware maintenance.',                       features:['Server installation, configuration & maintenance','Rack & stack cabling & decommissioning','Hardware break-fix & smart-hands support','Datacenter audits & capacity planning','Remote hands & eyes services globally'] },
-  { id:'field',      icon:<MapPinIco/>,    color:'#0066ff', title:'UK Field Operations',          short:'Smart-hands deployment across the United Kingdom.',                                                                          tagline:'Smart-hands deployment and real-time hardware maintenance nationwide.',                                                       features:['Under-4-hour emergency hardware SLA','Datacenter audits, rack cabling & decommissioning','On-demand certified engineers dispatched on-site','IT IMACD (Install, Move, Add, Change, Dispose)','Infrastructure cabling & structured wiring'] },
-  { id:'rental',     icon:<ServerIco/>,    color:'#0066ff', title:'IT Rental & Asset Lifecycle',  short:'Quality IT equipment rentals and lifecycle management.',                                                                     tagline:'Flexible IT equipment rental tailored to diverse business needs.',                                                           features:['Laptops, desktops, printers & peripherals','Short and long-term rental packages','IT staging, imaging & logistics','Global procurement & in-country sourcing','Certified e-waste disposal & data destruction'] },
-  { id:'devops',     icon:<ZapIco/>,       color:'#0066ff', title:'DevOps Support',               short:'Comprehensive DevOps support ensuring agile collaboration and continuous delivery.',                                         tagline:'Comprehensive DevOps support services, ensuring agile collaboration and continuous delivery.',                               features:['CI/CD pipeline design & automation','Docker & Kubernetes orchestration','Infrastructure as Code (Terraform, Ansible)','Site reliability engineering (SRE)','Monitoring, alerting & incident management'] },
-  { id:'consult',    icon:<BriefcaseIco/>, color:'#0066ff', title:'IT Consulting & Advisory',     short:'Strategic advisory to grow your business with tech.',                                                                        tagline:'Expert consultants helping you meet short and long-term IT objectives.',                                                     features:['Business technology strategy & roadmapping','Digital transformation advisory','Vendor selection & procurement guidance','IT budget optimisation & cost reduction','Compliance & governance frameworks'] },
+  { id:'support',    icon:<NetworkIco/>,   color:'#10b981', title:'Global IT Support',           short:'Empowering global businesses with agile IT solutions, bridging geographical gaps seamlessly.',                                tagline:'Empowering global businesses with agile IT solutions, bridging geographical gaps seamlessly.',                                features:['Deskside support & network operations','Datacenter support & management','Multilingual helpdesk (L1–L3)','Proactive monitoring & incident response','Global fiber & edge networking solutions'] },
+  { id:'cloud',      icon:<CloudIco/>,     color:'#10b981', title:'Cybersecurity & Cloud',        short:'Zero-trust security and managed cloud operations.',                                                                          tagline:'Continuous, zero-trust cloud orchestration engineered for maximum reliability.',                                              features:['24/7/365 Security Operations Center (SOC)','Firewall & cloud security solutions','Advanced threat intelligence & zero-trust','GDPR, ISO 27001 compliance assurance','Multi-cloud architecture & migration'] },
+  { id:'ai',         icon:<CpuIco/>,       color:'#10b981', title:'AI & Business Automation',     short:'Intelligent automation and AI solutions for enterprise.',                                                                    tagline:'Harness the power of AI to automate workflows and unlock business intelligence.',                                             features:['AI agent development & LLM integrations','Business process automation (RPA)','Machine learning models & predictive analytics','AI-powered chatbots & virtual assistants','Data pipelines & real-time intelligence dashboards'] },
+  { id:'web',        icon:<MonitorIco/>,   color:'#10b981', title:'Web Development & Web Apps',   short:'High-performance web applications and platforms.',                                                                           tagline:'Next-generation web applications built for scale, speed, and seamless UX.',                                                  features:['Custom web application development','React, Next.js & modern frontend frameworks','RESTful & GraphQL API development','E-commerce & enterprise portal solutions','Performance optimisation & SEO-ready architecture'] },
+  { id:'mobile',     icon:<PhoneDevIco/>,  color:'#10b981', title:'Mobile App Development',       short:'Native and cross-platform mobile experiences.',                                                                              tagline:'Powerful mobile apps engineered for iOS, Android, and cross-platform delivery.',                                             features:['iOS & Android native app development','React Native & Flutter cross-platform apps','Mobile UI/UX design & prototyping','App Store & Google Play deployment','Push notifications, offline mode & API integration'] },
+  { id:'software',   icon:<ZapIco/>,       color:'#10b981', title:'Software Engineering',         short:'Custom enterprise software built to scale.',                                                                                 tagline:'Bespoke software solutions architected for enterprise-grade performance.',                                                   features:['Custom enterprise software development','Microservices & API architecture','DevOps, CI/CD & cloud-native delivery','Legacy system modernisation','Real-time analytics & business intelligence'] },
+  { id:'cabling',    icon:<NetworkIco/>,   color:'#10b981', title:'Infrastructure Cabling',       short:'Efficient IT infrastructure cabling solutions, ensuring seamless connectivity and optimal performance.',                     tagline:'Efficient IT infrastructure cabling solutions, ensuring seamless connectivity and optimal performance.',                     features:['Structured cabling design & installation','Fibre optic & copper cabling solutions','Patch panel & rack cabling management','Cable testing, certification & documentation','Network infrastructure upgrades & migrations'] },
+  { id:'datacenter', icon:<ServerIco/>,    color:'#10b981', title:'Datacenter Services',          short:'Flexible engineering support for seamless datacenter operations and hardware maintenance.',                                  tagline:'Flexible engineering support for seamless operations, server-based systems and hardware maintenance.',                       features:['Server installation, configuration & maintenance','Rack & stack cabling & decommissioning','Hardware break-fix & smart-hands support','Datacenter audits & capacity planning','Remote hands & eyes services globally'] },
+  { id:'field',      icon:<MapPinIco/>,    color:'#10b981', title:'UK Field Operations',          short:'Smart-hands deployment across the United Kingdom.',                                                                          tagline:'Smart-hands deployment and real-time hardware maintenance nationwide.',                                                       features:['Under-4-hour emergency hardware SLA','Datacenter audits, rack cabling & decommissioning','On-demand certified engineers dispatched on-site','IT IMACD (Install, Move, Add, Change, Dispose)','Infrastructure cabling & structured wiring'] },
+  { id:'rental',     icon:<ServerIco/>,    color:'#10b981', title:'IT Rental & Asset Lifecycle',  short:'Quality IT equipment rentals and lifecycle management.',                                                                     tagline:'Flexible IT equipment rental tailored to diverse business needs.',                                                           features:['Laptops, desktops, printers & peripherals','Short and long-term rental packages','IT staging, imaging & logistics','Global procurement & in-country sourcing','Certified e-waste disposal & data destruction'] },
+  { id:'devops',     icon:<ZapIco/>,       color:'#10b981', title:'DevOps Support',               short:'Comprehensive DevOps support ensuring agile collaboration and continuous delivery.',                                         tagline:'Comprehensive DevOps support services, ensuring agile collaboration and continuous delivery.',                               features:['CI/CD pipeline design & automation','Docker & Kubernetes orchestration','Infrastructure as Code (Terraform, Ansible)','Site reliability engineering (SRE)','Monitoring, alerting & incident management'] },
+  { id:'consult',    icon:<BriefcaseIco/>, color:'#10b981', title:'IT Consulting & Advisory',     short:'Strategic advisory to grow your business with tech.',                                                                        tagline:'Expert consultants helping you meet short and long-term IT objectives.',                                                     features:['Business technology strategy & roadmapping','Digital transformation advisory','Vendor selection & procurement guidance','IT budget optimisation & cost reduction','Compliance & governance frameworks'] },
 ];
 
 const INDUSTRIES = ['Financial Services','Healthcare & Life Sciences','Telecommunications','Manufacturing','Retail & E-Commerce','Energy & Utilities','Public Sector','Technology & SaaS'];
@@ -289,49 +308,16 @@ export default function App() {
 
       {/* ── HEADER ── */}
       <header className={`site-header${scrolled?' site-header--scrolled':''}`} role="banner">
-        <div className="topbar" aria-label="Contact information">
-          <div className="container topbar__inner">
-            <div className="topbar__left">
-              <a href="tel:+4407498512294" className="topbar__item"><PhoneIcon/>07498 512294</a>
-              <a href="mailto:contact@axcisltd.co.uk" className="topbar__item"><MailIcon/>contact@axcisltd.co.uk</a>
-              <a href="mailto:support@axcisltd.co.uk" className="topbar__item"><MailIcon/>support@axcisltd.co.uk</a>
-            </div>
-          </div>
-        </div>
         <div className="container nav__inner">
           <a href="#home" className="nav__logo" onClick={e=>{e.preventDefault();nav('home');}} aria-label="AXCIS — Go to homepage">
-            <AxcisLogo/>
+            <AxcisLogo size="lg"/>
           </a>
           <nav className="nav__links" aria-label="Main navigation">
-            {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
+            {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Our Work','casestudy',null],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
               <button key={label} className="nav__link" onClick={()=>nav(pg,hash)}>{label}</button>
             ))}
           </nav>
           <div className="nav__cta">
-            {/* Theme toggle */}
-            <div className="theme-toggle" style={{position:'relative'}}>
-              <button className="theme-btn" onClick={()=>setThemeOpen(!themeOpen)} aria-label="Change theme" aria-expanded={themeOpen} aria-haspopup="listbox">
-                {theme==='light'
-                  ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-                  : theme==='dark'
-                  ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                  : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                }
-              </button>
-              {themeOpen && (
-                <ul className="theme-menu" role="listbox" aria-label="Select theme">
-                  {[['light','Light',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>],['dark','Dark',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>],['system','System',<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>]].map(([val,label,icon])=>(
-                    <li key={val} role="option" aria-selected={theme===val}
-                      className={`theme-option${theme===val?' theme-option--active':''}`}
-                      onClick={()=>{setTheme(val);setThemeOpen(false);}}>
-                      <span className="theme-option__icon">{icon}</span>
-                      <span>{label}</span>
-                      {theme===val && <span className="theme-option__check" aria-hidden="true">✓</span>}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
             <a href="mailto:support@axcisltd.co.uk" className="btn-ghost btn-sm">Support</a>
             <button className="btn-primary btn-sm" onClick={()=>nav('home','contact')}>Get in Touch <ArrowRight/></button>
           </div>
@@ -341,28 +327,12 @@ export default function App() {
         </div>
         <nav id="mobile-nav" className={`nav__mobile${menuOpen?' nav__mobile--open':''}`} aria-label="Mobile navigation" aria-hidden={!menuOpen}>
           <div className="mobile-menu-header">
-            <AxcisLogo/>
+            <AxcisLogo size="lg"/>
           </div>
-          {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
+          {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Our Work','casestudy',null],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
             <button key={label} className="nav__mobile-link" onClick={()=>nav(pg,hash)} tabIndex={menuOpen?0:-1}>{label}</button>
           ))}
-          <button className="btn-primary" style={{textAlign:'center',justifyContent:'center',marginTop:'1rem',width:'100%'}} onClick={()=>nav('home','contact')} tabIndex={menuOpen?0:-1}>Get in Touch <ArrowRight/></button>
-          {/* Theme switcher in mobile menu */}
-          <div className="mobile-theme-row" role="group" aria-label="Select theme">
-            {[
-              ['dark',  'Dark',   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>],
-              ['light', 'Light',  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>],
-              ['system','System', <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>],
-            ].map(([val, label, icon]) => (
-              <button key={val}
-                className={`mobile-theme-btn${theme===val?' mobile-theme-btn--active':''}`}
-                onClick={()=>setTheme(val)}
-                aria-pressed={theme===val}
-                tabIndex={menuOpen?0:-1}>
-                {icon}{label}
-              </button>
-            ))}
-          </div>
+          <button className="btn-primary" style={{textAlign:'center',justifyContent:'center',marginTop:'1.5rem',width:'100%'}} onClick={()=>nav('home','contact')} tabIndex={menuOpen?0:-1}>Get in Touch <ArrowRight/></button>
         </nav>
       </header>
 
@@ -531,14 +501,14 @@ export default function App() {
                 <ul className="collab-grid" aria-label="Collaboration models">
                   {COLLAB_MODELS.map((c,i)=>(
                     <li key={i} className="collab-card">
-                      <div className="collab-card__icon" aria-hidden="true" style={{color:'#0066ff',borderColor:'rgba(0,102,255,0.35)',background:'rgba(0,102,255,0.1)'}}>{c.icon}</div>
+                      <div className="collab-card__icon" aria-hidden="true" style={{color:'#10b981',borderColor:'rgba(16,185,129,0.35)',background:'rgba(16,185,129,0.1)'}}>{c.icon}</div>
                       <h3 className="collab-card__title">{c.t}</h3>
                       <p className="collab-card__desc">{c.d}</p>
                       <ul className="collab-card__bullets" aria-label={`${c.t} benefits`}>
                         {c.bullets.map(b=>(<li key={b}><span aria-hidden="true"><CheckIco/></span>{b}</li>))}
                       </ul>
-                      <button className="collab-card__cta" style={{color:'#0066ff'}} onClick={()=>nav('home','contact')}>{c.cta} <ArrowRight/></button>
-                      <div className="collab-card__glow" style={{background:'#0066ff'}} aria-hidden="true"/>
+                      <button className="collab-card__cta" style={{color:'#10b981'}} onClick={()=>nav('home','contact')}>{c.cta} <ArrowRight/></button>
+                      <div className="collab-card__glow" style={{background:'#10b981'}} aria-hidden="true"/>
                     </li>
                   ))}
                 </ul>
@@ -551,6 +521,70 @@ export default function App() {
                   ))}
                 </ul>
               </div>
+            </div>
+          </section>
+
+          {/* CASE STUDIES */}
+          <section id="case-studies" className="sec-pad" aria-labelledby="case-studies-heading" style={{background:'linear-gradient(180deg, var(--bg-main) 0%, #001125 100%)'}}>
+            <div className="container">
+              <div className="sec-head">
+                <p className="sec-tag" aria-hidden="true">Case Studies</p>
+                <h2 id="case-studies-heading" className="sec-h2">Enterprise Outcomes That Matter</h2>
+                <p>Real-world projects delivering measurable business impact across infrastructure, cloud, AI, and security.</p>
+              </div>
+              <ul className="case-studies__grid" style={{display:'grid',gap:'2rem',gridTemplateColumns:'repeat(auto-fit,minmax(min(340px,100%),1fr))',marginTop:'3rem'}}>
+                {CASE_STUDIES.map((study)=>(
+                  <li 
+                    key={study.id} 
+                    className="glass-card" 
+                    style={{
+                      padding:'2rem',
+                      cursor: study.id === 'coinbase-infrastructure' ? 'pointer' : 'default',
+                      transition: 'all 0.3s ease',
+                      position: 'relative'
+                    }}
+                    onClick={() => study.id === 'coinbase-infrastructure' && nav('casestudy')}
+                    onMouseEnter={(e) => study.id === 'coinbase-infrastructure' && (e.currentTarget.style.transform = 'translateY(-4px)', e.currentTarget.style.boxShadow = '0 8px 32px rgba(16,185,129,0.25)')}
+                    onMouseLeave={(e) => study.id === 'coinbase-infrastructure' && (e.currentTarget.style.transform = 'translateY(0)', e.currentTarget.style.boxShadow = '')}
+                  >
+                    <span style={{fontSize:'0.75rem',textTransform:'uppercase',color:'#10b981',fontWeight:700,letterSpacing:'0.08em',display:'block',marginBottom:'0.75rem'}}>{study.industry}</span>
+                    <h3 style={{fontSize:'1.25rem',fontWeight:700,marginBottom:'1rem',color:'var(--text-b)'}}>{study.title}</h3>
+                    <div style={{marginBottom:'1.5rem'}}>
+                      <h4 style={{fontSize:'0.8rem',textTransform:'uppercase',color:'var(--text-m)',fontWeight:700,letterSpacing:'0.05em',marginBottom:'0.5rem'}}>Challenge</h4>
+                      <p style={{fontSize:'0.9rem',color:'var(--text-m)',lineHeight:1.6}}>{study.challenge}</p>
+                    </div>
+                    <div style={{marginBottom:'1.5rem'}}>
+                      <h4 style={{fontSize:'0.8rem',textTransform:'uppercase',color:'var(--text-m)',fontWeight:700,letterSpacing:'0.05em',marginBottom:'0.5rem'}}>Outcome</h4>
+                      <p style={{fontSize:'0.9rem',color:'var(--text-m)',lineHeight:1.6}}>{study.outcome}</p>
+                    </div>
+                    <div style={{display:'flex',gap:'1.5rem',marginBottom:'1.5rem',flexWrap:'wrap'}}>
+                      {study.metrics.map((m)=>(
+                        <div key={m.label}>
+                          <div style={{fontSize:'1.6rem',fontWeight:800,color:'#10b981',lineHeight:1}}>{m.value}</div>
+                          <div style={{fontSize:'0.75rem',color:'var(--text-m)',marginTop:'0.25rem'}}>{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{display:'flex',gap:'0.5rem',flexWrap:'wrap'}}>
+                      {study.stack.map((tech)=>(
+                        <span key={tech} style={{fontSize:'0.75rem',padding:'0.35rem 0.75rem',background:'rgba(16,185,129,0.15)',border:'1px solid rgba(16,185,129,0.3)',borderRadius:'4px',color:'#10b981',fontWeight:600}}>{tech}</span>
+                      ))}
+                    </div>
+                    {study.id === 'coinbase-infrastructure' && (
+                      <button 
+                        className="btn-primary btn-sm" 
+                        style={{marginTop:'1.5rem',width:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:'0.5rem'}}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          nav('casestudy');
+                        }}
+                      >
+                        View Full Case Study <ArrowRight/>
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
@@ -672,6 +706,8 @@ export default function App() {
           </section>
         </main>
       )}
+
+      {page==='casestudy' && <CaseStudyPage />}
 
       {/* ── FOOTER ── */}
       <footer className="site-footer" role="contentinfo">

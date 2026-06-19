@@ -7,14 +7,14 @@ import TechStack from '../components/TechStack';
 import LeadershipVision from '../components/LeadershipVision';
 import ContactCTA from '../components/ContactCTA';
 
-export default function HomePage() {
+export default function HomePage({ onNavigate }) {
   return (
     <>
       <EnterpriseHero />
       <TrustedBy />
       <EnterpriseServices />
       <WhyAXCIS />
-      <CaseStudies />
+      <CaseStudies onNavigate={onNavigate} />
       <TechStack />
       <LeadershipVision />
       <ContactCTA />

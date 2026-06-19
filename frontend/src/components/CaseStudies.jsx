@@ -1,6 +1,6 @@
 import { CASE_STUDIES } from '../constants/homepage';
 
-export default function CaseStudies() {
+export default function CaseStudies({ onNavigate }) {
   return (
     <section className="section section--navy" id="case-studies">
       <div className="container">
@@ -12,7 +12,12 @@ export default function CaseStudies() {
 
         <div className="case-studies__grid">
           {CASE_STUDIES.map((study) => (
-            <article key={study.id} className="case-studies__card">
+            <article 
+              key={study.id} 
+              className="case-studies__card"
+              style={{ cursor: study.id === 'coinbase-infrastructure' ? 'pointer' : 'default' }}
+              onClick={() => study.id === 'coinbase-infrastructure' && onNavigate && onNavigate('casestudy')}
+            >
               <div className="case-studies__meta">
                 <span className="case-studies__industry">{study.industry}</span>
               </div>
@@ -40,6 +45,18 @@ export default function CaseStudies() {
                   <span key={tech} className="case-studies__tag">{tech}</span>
                 ))}
               </div>
+              {study.id === 'coinbase-infrastructure' && (
+                <button 
+                  className="btn-primary btn-sm" 
+                  style={{ marginTop: '1rem', width: '100%' }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onNavigate && onNavigate('casestudy');
+                  }}
+                >
+                  View Full Case Study →
+                </button>
+              )}
             </article>
           ))}
         </div>
