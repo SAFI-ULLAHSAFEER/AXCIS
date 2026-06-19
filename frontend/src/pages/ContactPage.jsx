@@ -76,6 +76,45 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      {/* Map Section - Vector.ai Style */}
+      <section className="location-map-section">
+        <div className="container">
+          <div className="location-map-header">
+            <span className="sec-tag">Locate Us</span>
+            <h2 className="sec-h2">Our Location</h2>
+            <p style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto', color: 'var(--text-m)' }}>
+              Visit our office in Hatfield, United Kingdom
+            </p>
+          </div>
+          <div className="location-map-container">
+            <a 
+              href="https://maps.app.goo.gl/4iBi9sW3mLKrgoM38" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="location-map-link"
+              aria-label="View our location on Google Maps"
+            >
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!4v1781862622412!6m8!1m7!1s7CrAJCMpquRKw5YbnQlV7g!2m2!1d51.87310624558452!2d-0.4193536509153122!3f217.69347!4f0!5f0.7820865974627469" 
+                width="100%" 
+                height="500" 
+                style={{ border: 0, borderRadius: 'var(--r-lg)', display: 'block' }} 
+                allowFullScreen="" 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+                title="AXCIS Office Location - Hatfield, United Kingdom"
+              />
+              <div className="map-overlay">
+                <span className="map-overlay-text">
+                  <MapPin style={{ width: '20px', height: '20px' }} />
+                  Open in Google Maps
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
