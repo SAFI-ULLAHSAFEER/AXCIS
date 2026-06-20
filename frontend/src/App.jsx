@@ -224,6 +224,30 @@ const COLLAB_MODELS = [
   { icon:<UsersIco/>,     t:'Engineer & Talent Network',d:'We partner with staffing agencies, training providers, and independent engineers to build the world-class workforce that powers AXCIS field operations globally.', cta:'Join Our Network',   bullets:['Vetted L1–L3 engineer placements','Field dispatch assignments','Long-term staffing contracts'] },
 ];
 
+/* Services Mega Menu Categories */
+const SERVICE_CATEGORIES = {
+  'Infrastructure & Support': [
+    { id: 'support', title: 'Global IT Support', desc: 'Enterprise helpdesk & network operations', icon: <NetworkIco/> },
+    { id: 'datacenter', title: 'Datacenter Services', desc: 'Server management & operations', icon: <ServerIco/> },
+    { id: 'cabling', title: 'Infrastructure Cabling', desc: 'Structured cabling & fiber optics', icon: <NetworkIco/> },
+    { id: 'field', title: 'UK Field Operations', desc: 'On-site smart hands deployment', icon: <MapPinIco/> },
+  ],
+  'Cloud & Security': [
+    { id: 'cloud', title: 'Cybersecurity & Cloud', desc: 'Zero-trust security & managed cloud', icon: <CloudIco/> },
+    { id: 'devops', title: 'DevOps Support', desc: 'CI/CD & infrastructure automation', icon: <ZapIco/> },
+  ],
+  'Software Engineering': [
+    { id: 'ai', title: 'AI & Business Automation', desc: 'Intelligent automation & AI solutions', icon: <CpuIco/> },
+    { id: 'software', title: 'Software Engineering', desc: 'Custom enterprise software', icon: <ZapIco/> },
+    { id: 'web', title: 'Web Development', desc: 'Modern web applications', icon: <MonitorIco/> },
+    { id: 'mobile', title: 'Mobile App Development', desc: 'iOS & Android native apps', icon: <PhoneDevIco/> },
+  ],
+  'Consulting & Advisory': [
+    { id: 'consult', title: 'IT Consulting & Advisory', desc: 'Strategic technology guidance', icon: <BriefcaseIco/> },
+    { id: 'rental', title: 'IT Rental & Asset Lifecycle', desc: 'Equipment rental & management', icon: <ServerIco/> },
+  ],
+};
+
 /* ─── MAIN APP ───────────────────────────────────────────────────────────── */
 export default function App() {
   const [theme, setTheme]         = useState(() => localStorage.getItem('axcis-theme') || 'dark');
@@ -232,6 +256,7 @@ export default function App() {
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
   const [servicesMegaOpen, setServicesMegaOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('Infrastructure & Support');
 
   // Enable scroll-triggered animations (only on home page)
   useEffect(() => {
@@ -348,6 +373,16 @@ export default function App() {
     return () => document.removeEventListener('mousedown', fn);
   }, [themeOpen]);
 
+  /* Close services mega menu on outside click */
+  useEffect(() => {
+    if (!servicesMegaOpen) return;
+    const fn = (e) => { 
+      if (!e.target.closest('.services-mega-wrapper')) setServicesMegaOpen(false); 
+    };
+    document.addEventListener('mousedown', fn);
+    return () => document.removeEventListener('mousedown', fn);
+  }, [servicesMegaOpen]);
+
   const goSlide = i => { clearInterval(slideTimer.current); setSlide(i); slideTimer.current=setInterval(()=>setSlide(p=>(p+1)%SLIDES.length),5500); };
   const showToast = (msg, type='success') => { const id=Math.random().toString(36).slice(2); setToasts(p=>[...p,{id,msg,type}]); setTimeout(()=>setToasts(p=>p.filter(t=>t.id!==id)),5000); };
   const handleInput = e => setForm(p=>({...p,[e.target.name]:e.target.value}));
@@ -386,10 +421,88 @@ export default function App() {
           <a href="#home" className="nav__logo" onClick={e=>{e.preventDefault();nav('home');}} aria-label="AXCIS — Go to homepage">
             <AxcisLogo size="lg"/>
           </a>
-          <nav className="nav__links" aria-label="Main navigation">
-            {[['About','home','about'],['Services','home','services'],['Industries','home','industries'],['Why AXCIS','home','why'],['Our Work','casestudy',null],['Careers','careers',null],['Contact','home','contact']].map(([label,pg,hash])=>(
-              <button key={label} className="nav__link" onClick={()=>nav(pg,hash)}>{label}</button>
-            ))}
+          <nav className="nav__links services-mega-wrapper" aria-label="Main navigation">
+            <button className="nav__link" onClick={()=>nav('home','about')}>About</button>
+            <div style={{position:'relative'}}>
+              <button 
+                className="nav__link" 
+                onMouseEnter={()=>setServicesMegaOpen(true)}
+                onClick={()=>setServicesMegaOpen(!servicesMegaOpen)}
+                aria-expanded={servicesMegaOpen}
+              >
+                Services <span style={{marginLeft:'4px',fontSize:'0.7em'}}>▼</span>
+              </button>
+              
+              {/* SERVICES MEGA MENU */}
+              <div className={`services-mega${servicesMegaOpen?' is-open':''}`}>
+                <div className="services-mega__inner">
+                  {/* Left - Categories */}
+                  <div className="services-mega__categories">
+                    <h3 className="services-mega__cat-title">Categories</h3>
+                    <ul className="services-mega__cat-list">
+                      {Object.keys(SERVICE_CATEGORIES).map(cat => (
+                        <li 
+                          key={cat}
+                          className={`services-mega__cat-item${selectedCategory===cat?' active':''}`}
+                          onMouseEnter={()=>setSelectedCategory(cat)}
+                        >
+                          {cat}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  {/* Middle - Services Grid */}
+                  <div className="services-mega__grid">
+                    {SERVICE_CATEGORIES[selectedCategory].map(service => (
+                      <button 
+                        key={service.id}
+                        className="services-mega__service"
+                        onClick={()=>{setActiveSvc(service.id);nav('home','services');setServicesMegaOpen(false);}}
+                      >
+                        <div className="services-mega__service-icon">{service.icon}</div>
+                        <div className="services-mega__service-content">
+                          <h4 className="services-mega__service-title">
+                            {service.title}
+                            <ArrowRight/>
+                          </h4>
+                          <p className="services-mega__service-desc">{service.desc}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                  
+                  {/* Right - Featured */}
+                  <div className="services-mega__featured">
+                    <div className="services-mega__featured-card">
+                      <span className="services-mega__featured-tag">Enterprise Ready</span>
+                      <h4 className="services-mega__featured-title">Global IT Services at Scale</h4>
+                      <p className="services-mega__featured-desc">
+                        AXCIS delivers enterprise-grade technology solutions across 100+ countries with 24/7/365 support.
+                      </p>
+                      <div className="services-mega__featured-stats">
+                        <div className="services-mega__stat">
+                          <div className="services-mega__stat-value">100+</div>
+                          <div className="services-mega__stat-label">Countries</div>
+                        </div>
+                        <div className="services-mega__stat">
+                          <div className="services-mega__stat-value">24/7</div>
+                          <div className="services-mega__stat-label">Support</div>
+                        </div>
+                      </div>
+                      <button className="btn-primary btn-sm services-mega__cta" onClick={()=>{nav('home','contact');setServicesMegaOpen(false);}}>
+                        Get Started <ArrowRight/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button className="nav__link" onClick={()=>nav('home','industries')}>Industries</button>
+            <button className="nav__link" onClick={()=>nav('home','why')}>Why AXCIS</button>
+            <button className="nav__link" onClick={()=>nav('casestudy',null)}>Our Work</button>
+            <button className="nav__link" onClick={()=>nav('careers',null)}>Careers</button>
+            <button className="nav__link" onClick={()=>nav('home','contact')}>Contact</button>
           </nav>
           <div className="nav__cta">
             <a href="mailto:support@axcisltd.co.uk" className="btn-ghost btn-sm">Support</a>
