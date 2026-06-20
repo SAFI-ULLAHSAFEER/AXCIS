@@ -423,16 +423,89 @@ p{color:var(--text-m);line-height:1.8;font-size:1.05rem}
 .collab-ecosystem__pill:hover{border-color:rgba(16,185,129,0.3);color:var(--cyan)}
 
 /* ══════════════════════════════════════════════════════
-   WHY AXCIS / VALUES
+   WHY AXCIS / VALUES - Professional Clean Design
 ══════════════════════════════════════════════════════ */
-.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.value-card{background:#111111;border:1px solid var(--border);border-radius:var(--r-xl);padding:2rem;transition:border-color 0.3s,transform 0.25s}
-.value-card:hover{border-color:var(--border-b);transform:translateY(-3px)}
-.value-card__icon{width:46px;height:46px;border-radius:var(--r-md);background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;color:var(--cyan);margin-bottom:1.25rem}
-.value-card__title{font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--text-w)}
-.value-card__desc{font-size:0.85rem;line-height:1.65}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+
+.value-card{
+  position:relative;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--r-lg);
+  padding:2.5rem 2rem;
+  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow:hidden;
+}
+
+/* Subtle gradient background */
+.value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(16,185,129,0.02) 0%, rgba(16,185,129,0.00) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.value-card:hover::before {
+  opacity: 1;
+}
+
+.value-card:hover{
+  border-color:rgba(16,185,129,0.3);
+  transform:translateY(-4px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+
+/* Modern icon style - no background circle */
+.value-card__icon{
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#10b981;
+  margin-bottom:1.5rem;
+  position:relative;
+  z-index:1;
+}
+
+.value-card__icon svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.5;
+}
+
+.value-card__title{
+  font-size:1.1rem;
+  font-weight:700;
+  margin-bottom:0.75rem;
+  color:#ffffff;
+  position:relative;
+  z-index:1;
+  letter-spacing:-0.01em;
+}
+
+.value-card__desc{
+  font-size:0.9rem;
+  line-height:1.7;
+  color:#9ca3af;
+  position:relative;
+  z-index:1;
+}
+
+/* Hover glow effect */
+.value-card:hover .value-card__icon {
+  color:#34d399;
+  filter: drop-shadow(0 0 8px rgba(16,185,129,0.4));
+}
+
 @media(max-width:900px){.values-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.values-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.values-grid{grid-template-columns:1fr;gap:1.5rem}}
 
 /* ══════════════════════════════════════════════════════
    CONTACT

@@ -198,11 +198,11 @@ const SERVICES = [
 const INDUSTRIES = ['Financial Services','Healthcare & Life Sciences','Telecommunications','Manufacturing','Retail & E-Commerce','Energy & Utilities','Public Sector','Technology & SaaS'];
 
 const VALUES = [
-  { icon:<ShieldIco/>,   title:'Integrity First',       desc:'Complete transparency in every engagement — no hidden costs, no surprises, no excuses.' },
-  { icon:<ZapIco/>,      title:'Operational Velocity',  desc:'Rapid global field mobilisation with structured SLAs — speed without sacrificing standards.' },
-  { icon:<GlobeIco/>,    title:'Global Mindset',        desc:'Thinking and operating at worldwide scale while delivering local precision and expertise.' },
-  { icon:<UsersIco/>,    title:'People Powered',        desc:'Our certified L1–L3 engineers and consultants are the backbone of every deployment.' },
-  { icon:<ActivityIco/>, title:'Relentless Uptime',     desc:'We engineer for 99.999% availability because your business cannot afford downtime.' },
+  { icon:<ShieldIco/>,   title:'Integrity First',       desc:'Complete transparency in every engagement. No hidden costs, no surprises, no excuses.' },
+  { icon:<ZapIco/>,      title:'Operational Velocity',  desc:'Rapid global field mobilization with structured SLAs. Speed without sacrificing standards.' },
+  { icon:<GlobeIco/>,    title:'Global Mindset',        desc:'Think and operate at worldwide scale while delivering local precision and expertise.' },
+  { icon:<UsersIco/>,    title:'People Powered',        desc:'Certified L1-L3 engineers and consultants are the backbone of every deployment.' },
+  { icon:<ActivityIco/>, title:'Relentless Uptime',     desc:'Engineer for 99.999% availability because your business cannot afford downtime.' },
   { icon:<CheckIco/>,    title:'Excellence Always',     desc:'Every project, every ticket, every field dispatch executed to the highest standard.' },
 ];
 
