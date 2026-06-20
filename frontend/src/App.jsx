@@ -231,6 +231,7 @@ export default function App() {
   const [page, setPage]           = useState('home');
   const [menuOpen, setMenuOpen]   = useState(false);
   const [scrolled, setScrolled]   = useState(false);
+  const [servicesMegaOpen, setServicesMegaOpen] = useState(false);
 
   // Enable scroll-triggered animations (only on home page)
   useEffect(() => {
