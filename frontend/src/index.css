@@ -2381,3 +2381,45 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
     gap: 1rem;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   INDUSTRY CARDS - ENGAGING ANIMATIONS
+═══════════════════════════════════════════════════════ */
+.ind-card:hover .ind-hover-overlay {
+  opacity: 1 !important;
+}
+
+.ind-card:hover .ind-accent-line {
+  width: 100% !important;
+}
+
+.ind-card:hover .ind-card__name {
+  color: #10b981 !important;
+  transform: translateX(8px);
+}
+
+/* Staggered animation on load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ind-card {
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.ind-card:nth-child(1) { animation-delay: 0.1s; }
+.ind-card:nth-child(2) { animation-delay: 0.15s; }
+.ind-card:nth-child(3) { animation-delay: 0.2s; }
+.ind-card:nth-child(4) { animation-delay: 0.25s; }
+.ind-card:nth-child(5) { animation-delay: 0.3s; }
+.ind-card:nth-child(6) { animation-delay: 0.35s; }
+.ind-card:nth-child(7) { animation-delay: 0.4s; }
+.ind-card:nth-child(8) { animation-delay: 0.45s; }

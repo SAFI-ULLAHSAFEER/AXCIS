@@ -196,14 +196,14 @@ const SERVICES = [
 ];
 
 const INDUSTRIES = [
-  { name: 'Financial Services', image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80' },
-  { name: 'Healthcare & Life Sciences', image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80' },
-  { name: 'Telecommunications', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80' },
-  { name: 'Manufacturing', image: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80' },
-  { name: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80' },
-  { name: 'Energy & Utilities', image: 'https://images.unsplash.com/photo-1509391111737-102-saa98f34ec1?w=800&q=80' },
-  { name: 'Public Sector', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80' },
-  { name: 'Technology & SaaS', image: 'https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=800&q=80' }
+  { name: 'Financial Services', image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80', description: 'Banking, fintech, and investment solutions' },
+  { name: 'Healthcare & Life Sciences', image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80', description: 'Medical technology and healthcare IT' },
+  { name: 'Telecommunications', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80', description: 'Network infrastructure and connectivity' },
+  { name: 'Manufacturing', image: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80', description: 'Industrial automation and IoT' },
+  { name: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80', description: 'Digital commerce and retail tech' },
+  { name: 'Energy & Utilities', image: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&q=80', description: 'Power infrastructure and smart grids' },
+  { name: 'Public Sector', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80', description: 'Government and civic services' },
+  { name: 'Technology & SaaS', image: 'https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=800&q=80', description: 'Software platforms and cloud services' }
 ];
 
 const VALUES = [
@@ -645,34 +645,90 @@ export default function App() {
               <ul className="ind-grid" aria-label="Industries served">
                 {INDUSTRIES.map((industry,i)=>(
                   <li key={i} className="ind-card" style={{
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75)), url(${industry.image})`,
-                    backgroundSize: 'cover',
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(16,185,129,0.15), rgba(0,0,0,0.7)), url(${industry.image})`,
+                    backgroundSize: '110%',
                     backgroundPosition: 'center',
-                    minHeight: '240px',
+                    minHeight: '280px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
                     padding: '2rem',
                     position: 'relative',
                     overflow: 'hidden',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer'
+                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    cursor: 'pointer',
+                    border: '1px solid rgba(16,185,129,0.2)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-8px)';
-                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(16,185,129,0.3)';
+                    e.currentTarget.style.transform = 'translateY(-12px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 20px 60px rgba(16,185,129,0.4)';
+                    e.currentTarget.style.backgroundSize = '120%';
+                    e.currentTarget.style.borderColor = 'rgba(16,185,129,0.6)';
+                    const desc = e.currentTarget.querySelector('.ind-description');
+                    if (desc) {
+                      desc.style.opacity = '1';
+                      desc.style.transform = 'translateY(0)';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                    e.currentTarget.style.backgroundSize = '110%';
+                    e.currentTarget.style.borderColor = 'rgba(16,185,129,0.2)';
+                    const desc = e.currentTarget.querySelector('.ind-description');
+                    if (desc) {
+                      desc.style.opacity = '0';
+                      desc.style.transform = 'translateY(20px)';
+                    }
                   }}>
+                    {/* Animated overlay gradient on hover */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0) 100%)',
+                      opacity: 0,
+                      transition: 'opacity 0.5s ease',
+                      pointerEvents: 'none',
+                      zIndex: 1
+                    }} className="ind-hover-overlay"></div>
+                    
+                    {/* Industry name */}
                     <span className="ind-card__name" style={{
-                      fontSize: '1.25rem',
+                      fontSize: '1.35rem',
                       fontWeight: '700',
                       color: '#fff',
                       textShadow: '0 2px 12px rgba(0,0,0,0.8)',
-                      letterSpacing: '-0.01em'
+                      letterSpacing: '-0.02em',
+                      position: 'relative',
+                      zIndex: 2,
+                      marginBottom: '0.5rem',
+                      transition: 'all 0.3s ease'
                     }}>{industry.name}</span>
+                    
+                    {/* Industry description - slides up on hover */}
+                    <span className="ind-description" style={{
+                      fontSize: '0.95rem',
+                      fontWeight: '400',
+                      color: '#e0e0e0',
+                      textShadow: '0 1px 8px rgba(0,0,0,0.9)',
+                      opacity: 0,
+                      transform: 'translateY(20px)',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      zIndex: 2
+                    }}>{industry.description}</span>
+                    
+                    {/* Animated corner accent */}
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: '0',
+                      height: '4px',
+                      background: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
+                      transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: 3
+                    }} className="ind-accent-line"></div>
                   </li>
                 ))}
               </ul>
