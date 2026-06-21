@@ -196,14 +196,14 @@ const SERVICES = [
 ];
 
 const INDUSTRIES = [
-  { name: 'Financial Services', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80', icon: '💰' },
-  { name: 'Healthcare & Life Sciences', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80', icon: '🏥' },
-  { name: 'Telecommunications', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80', icon: '📡' },
-  { name: 'Manufacturing', image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80', icon: '🏭' },
-  { name: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80', icon: '🛒' },
-  { name: 'Energy & Utilities', image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80', icon: '⚡' },
-  { name: 'Public Sector', image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=80', icon: '🏛️' },
-  { name: 'Technology & SaaS', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80', icon: '💻' }
+  { name: 'Financial Services', image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&q=80' },
+  { name: 'Healthcare & Life Sciences', image: 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80' },
+  { name: 'Telecommunications', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&q=80' },
+  { name: 'Manufacturing', image: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=800&q=80' },
+  { name: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&q=80' },
+  { name: 'Energy & Utilities', image: 'https://images.unsplash.com/photo-1509391111737-102-saa98f34ec1?w=800&q=80' },
+  { name: 'Public Sector', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80' },
+  { name: 'Technology & SaaS', image: 'https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=800&q=80' }
 ];
 
 const VALUES = [
@@ -645,27 +645,33 @@ export default function App() {
               <ul className="ind-grid" aria-label="Industries served">
                 {INDUSTRIES.map((industry,i)=>(
                   <li key={i} className="ind-card" style={{
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url(${industry.image})`,
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75)), url(${industry.image})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
-                    minHeight: '220px',
+                    minHeight: '240px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
-                    padding: '1.5rem',
+                    padding: '2rem',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(16,185,129,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}>
-                    <span className="ind-card__icon" style={{
-                      fontSize: '2.5rem',
-                      marginBottom: '0.5rem',
-                      display: 'block'
-                    }}>{industry.icon}</span>
                     <span className="ind-card__name" style={{
-                      fontSize: '1.15rem',
+                      fontSize: '1.25rem',
                       fontWeight: '700',
                       color: '#fff',
-                      textShadow: '0 2px 8px rgba(0,0,0,0.5)'
+                      textShadow: '0 2px 12px rgba(0,0,0,0.8)',
+                      letterSpacing: '-0.01em'
                     }}>{industry.name}</span>
                   </li>
                 ))}
