@@ -195,7 +195,16 @@ const SERVICES = [
   { id:'consult',    icon:<BriefcaseIco/>, color:'#10b981', title:'IT Consulting & Advisory',     short:'Strategic advisory to grow your business with tech.',                                                                        tagline:'Expert consultants helping you meet short and long-term IT objectives.',                                                     features:['Business technology strategy & roadmapping','Digital transformation advisory','Vendor selection & procurement guidance','IT budget optimisation & cost reduction','Compliance & governance frameworks'], image:'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80' },
 ];
 
-const INDUSTRIES = ['Financial Services','Healthcare & Life Sciences','Telecommunications','Manufacturing','Retail & E-Commerce','Energy & Utilities','Public Sector','Technology & SaaS'];
+const INDUSTRIES = [
+  { name: 'Financial Services', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80', icon: '💰' },
+  { name: 'Healthcare & Life Sciences', image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80', icon: '🏥' },
+  { name: 'Telecommunications', image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80', icon: '📡' },
+  { name: 'Manufacturing', image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80', icon: '🏭' },
+  { name: 'Retail & E-Commerce', image: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80', icon: '🛒' },
+  { name: 'Energy & Utilities', image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=80', icon: '⚡' },
+  { name: 'Public Sector', image: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=80', icon: '🏛️' },
+  { name: 'Technology & SaaS', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80', icon: '💻' }
+];
 
 const VALUES = [
   { icon:<ShieldIco/>,   title:'Integrity First',       desc:'Complete transparency in every engagement. No hidden costs, no surprises, no excuses.' },
@@ -634,9 +643,30 @@ export default function App() {
                 <p>From financial services to manufacturing, AXCIS delivers tailored technology solutions across the industries that power the global economy.</p>
               </div>
               <ul className="ind-grid" aria-label="Industries served">
-                {INDUSTRIES.map((name,i)=>(
-                  <li key={i} className="ind-card">
-                    <span className="ind-card__name">{name}</span>
+                {INDUSTRIES.map((industry,i)=>(
+                  <li key={i} className="ind-card" style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url(${industry.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    minHeight: '220px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: '1.5rem',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    <span className="ind-card__icon" style={{
+                      fontSize: '2.5rem',
+                      marginBottom: '0.5rem',
+                      display: 'block'
+                    }}>{industry.icon}</span>
+                    <span className="ind-card__name" style={{
+                      fontSize: '1.15rem',
+                      fontWeight: '700',
+                      color: '#fff',
+                      textShadow: '0 2px 8px rgba(0,0,0,0.5)'
+                    }}>{industry.name}</span>
                   </li>
                 ))}
               </ul>
