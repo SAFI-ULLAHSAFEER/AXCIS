@@ -602,14 +602,112 @@ export default function App() {
                 <p>AXCIS provides the critical technology layers modern enterprises need — from infrastructure and security to custom software and on-site field operations.</p>
               </div>
               <div className="svc-grid" role="list">
-                {SERVICES.map(s=>(
+                {SERVICES.map((s, idx)=>(
                   <button key={s.id} role="listitem" className={`svc-card${activeSvc===s.id?' svc-card--active':''}`}
                     onClick={()=>setActiveSvc(s.id)} aria-pressed={activeSvc===s.id}
-                    aria-label={`${s.title} — ${s.short}`} style={{'--sc':s.color, backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.9)), url(${s.image})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
-                    <div className="svc-card__icon" style={{fontSize: '2rem', marginBottom: '1rem', color: s.color}} aria-hidden="true">{s.icon}</div>
-                    <h3 className="svc-card__title">{s.title}</h3>
-                    <p className="svc-card__short">{s.short}</p>
-                    <span className="svc-card__arrow" aria-hidden="true"><ArrowRight/></span>
+                    aria-label={`${s.title} — ${s.short}`} 
+                    style={{
+                      '--sc':s.color, 
+                      backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(16,185,129,0.15), rgba(0,0,0,0.8)), url(${s.image})`, 
+                      backgroundSize: activeSvc===s.id ? '120%' : '110%',
+                      backgroundPosition: 'center',
+                      transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      border: activeSvc===s.id ? '2px solid rgba(16,185,129,0.8)' : '1px solid rgba(16,185,129,0.2)',
+                      transform: activeSvc===s.id ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)',
+                      boxShadow: activeSvc===s.id ? '0 20px 60px rgba(16,185,129,0.4)' : '0 4px 20px rgba(0,0,0,0.3)',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      animationDelay: `${idx * 0.08}s`
+                    }}
+                    onMouseEnter={(e) => {
+                      if(activeSvc !== s.id) {
+                        e.currentTarget.style.transform = 'translateY(-8px) scale(1.01)';
+                        e.currentTarget.style.boxShadow = '0 16px 50px rgba(16,185,129,0.35)';
+                        e.currentTarget.style.backgroundSize = '115%';
+                        e.currentTarget.style.borderColor = 'rgba(16,185,129,0.5)';
+                      }
+                      const shortDesc = e.currentTarget.querySelector('.svc-card__short');
+                      if(shortDesc) {
+                        shortDesc.style.opacity = '1';
+                        shortDesc.style.transform = 'translateY(0)';
+                      }
+                      const accentLine = e.currentTarget.querySelector('.svc-accent-line');
+                      if(accentLine) {
+                        accentLine.style.width = '100%';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if(activeSvc !== s.id) {
+                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                        e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                        e.currentTarget.style.backgroundSize = '110%';
+                        e.currentTarget.style.borderColor = 'rgba(16,185,129,0.2)';
+                      }
+                      const shortDesc = e.currentTarget.querySelector('.svc-card__short');
+                      if(shortDesc && activeSvc !== s.id) {
+                        shortDesc.style.opacity = '0.8';
+                        shortDesc.style.transform = 'translateY(0)';
+                      }
+                      const accentLine = e.currentTarget.querySelector('.svc-accent-line');
+                      if(accentLine && activeSvc !== s.id) {
+                        accentLine.style.width = '0';
+                      }
+                    }}>
+                    
+                    {/* Animated overlay gradient */}
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(135deg, rgba(16,185,129,0.25) 0%, rgba(16,185,129,0) 100%)',
+                      opacity: activeSvc===s.id ? 1 : 0,
+                      transition: 'opacity 0.5s ease',
+                      pointerEvents: 'none',
+                      zIndex: 1
+                    }}></div>
+                    
+                    <div className="svc-card__icon" style={{
+                      fontSize: '2.5rem', 
+                      marginBottom: '1rem', 
+                      color: s.color,
+                      transition: 'all 0.3s ease',
+                      position: 'relative',
+                      zIndex: 2,
+                      filter: activeSvc===s.id ? 'drop-shadow(0 4px 12px rgba(16,185,129,0.6))' : 'none'
+                    }} aria-hidden="true">{s.icon}</div>
+                    
+                    <h3 className="svc-card__title" style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      transition: 'all 0.3s ease',
+                      color: activeSvc===s.id ? '#10b981' : '#fff'
+                    }}>{s.title}</h3>
+                    
+                    <p className="svc-card__short" style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      opacity: activeSvc===s.id ? 1 : 0.8,
+                      transform: activeSvc===s.id ? 'translateY(0)' : 'translateY(0)',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}>{s.short}</p>
+                    
+                    <span className="svc-card__arrow" aria-hidden="true" style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      transition: 'all 0.3s ease',
+                      color: activeSvc===s.id ? '#10b981' : 'inherit'
+                    }}><ArrowRight/></span>
+                    
+                    {/* Animated bottom accent line */}
+                    <div className="svc-accent-line" style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: activeSvc===s.id ? '100%' : '0',
+                      height: '4px',
+                      background: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
+                      transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      zIndex: 3
+                    }}></div>
                   </button>
                 ))}
               </div>

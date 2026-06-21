@@ -2423,3 +2423,38 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
 .ind-card:nth-child(6) { animation-delay: 0.35s; }
 .ind-card:nth-child(7) { animation-delay: 0.4s; }
 .ind-card:nth-child(8) { animation-delay: 0.45s; }
+
+
+/* ═══════════════════════════════════════════════════════
+   SERVICE CARDS - ENGAGING ANIMATIONS
+═══════════════════════════════════════════════════════ */
+.svc-card {
+  animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.svc-card:nth-child(1) { animation-delay: 0.1s; }
+.svc-card:nth-child(2) { animation-delay: 0.18s; }
+.svc-card:nth-child(3) { animation-delay: 0.26s; }
+.svc-card:nth-child(4) { animation-delay: 0.34s; }
+.svc-card:nth-child(5) { animation-delay: 0.42s; }
+.svc-card:nth-child(6) { animation-delay: 0.5s; }
+.svc-card:nth-child(7) { animation-delay: 0.58s; }
+.svc-card:nth-child(8) { animation-delay: 0.66s; }
+.svc-card:nth-child(9) { animation-delay: 0.74s; }
+.svc-card:nth-child(10) { animation-delay: 0.82s; }
+.svc-card:nth-child(11) { animation-delay: 0.9s; }
+.svc-card:nth-child(12) { animation-delay: 0.98s; }
+
+/* Active card enhanced glow */
+.svc-card--active {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 20px 60px rgba(16,185,129,0.4);
+  }
+  50% {
+    box-shadow: 0 20px 70px rgba(16,185,129,0.6);
+  }
+}
