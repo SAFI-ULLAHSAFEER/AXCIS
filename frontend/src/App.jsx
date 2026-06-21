@@ -374,7 +374,7 @@ export default function App() {
             <AxcisLogo size="lg"/>
           </a>
           <nav className="nav__links services-mega-wrapper" aria-label="Main navigation">
-            <button className="nav__link" onClick={()=>nav('home','about')}>About</button>
+            <button className="nav__link" onClick={()=>{nav('home','about');setServicesMegaOpen(false);}}>About</button>
             <div style={{position:'relative'}}>
               <button 
                 className="nav__link" 
@@ -421,8 +421,8 @@ export default function App() {
                           <p className="services-mega__service-desc">{service.desc}</p>
                         </div>
                       </button>
-          <nav className="nav__links services-mega-wrapper" aria-label="Main navigation">
-            <button className="nav__link" onClick={()=>{nav('home','about');setServicesMegaOpen(false);}}>About</button>
+                    ))}
+                  </div>
                   
                   {/* Right - Featured */}
                   <div className="services-mega__featured">
