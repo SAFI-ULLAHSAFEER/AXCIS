@@ -2,6 +2,54 @@ import React, { useState, useEffect, useRef } from 'react';
 import CaseStudyPage from './pages/CaseStudyPage';
 import { CASE_STUDIES } from './constants/homepage';
 
+/* ─── SCROLL REVEAL HOOK ─────────────────────────────────────────────────── */
+const useScrollReveal = (page) => {
+  useEffect(() => {
+    // Only run on home page
+    if (page !== 'home') return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-50px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      // Observe all scroll-reveal elements
+      const revealElements = document.querySelectorAll(
+        '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+      );
+      
+      revealElements.forEach(el => {
+        observer.observe(el);
+        // Immediately show elements that are already in viewport
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('is-visible');
+        }
+      });
+    }, 100);
+
+    // Cleanup
+    return () => {
+      clearTimeout(timeoutId);
+      const revealElements = document.querySelectorAll(
+        '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-blur'
+      );
+      revealElements.forEach(el => observer.unobserve(el));
+    };
+  }, [page]);
+};
+
 /* ─── ICONS ─────────────────────────────────────────────────────────────── */
 const ArrowRight   = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>;
 const MenuIcon     = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
