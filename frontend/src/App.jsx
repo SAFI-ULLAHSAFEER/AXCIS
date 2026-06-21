@@ -608,7 +608,7 @@ export default function App() {
                     aria-label={`${s.title} — ${s.short}`} 
                     style={{
                       '--sc':s.color, 
-                      backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(16,185,129,0.15), rgba(0,0,0,0.8)), url(${s.image})`, 
+                      backgroundImage: `linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url(${s.image})`, 
                       backgroundSize: activeSvc===s.id ? '120%' : '110%',
                       backgroundPosition: 'center',
                       transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -629,11 +629,15 @@ export default function App() {
                       const shortDesc = e.currentTarget.querySelector('.svc-card__short');
                       if(shortDesc) {
                         shortDesc.style.opacity = '1';
-                        shortDesc.style.transform = 'translateY(0)';
+                        shortDesc.style.maxHeight = '200px';
                       }
                       const accentLine = e.currentTarget.querySelector('.svc-accent-line');
                       if(accentLine) {
                         accentLine.style.width = '100%';
+                      }
+                      const hoverOverlay = e.currentTarget.querySelector('.svc-hover-overlay');
+                      if(hoverOverlay) {
+                        hoverOverlay.style.opacity = '1';
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -645,24 +649,37 @@ export default function App() {
                       }
                       const shortDesc = e.currentTarget.querySelector('.svc-card__short');
                       if(shortDesc && activeSvc !== s.id) {
-                        shortDesc.style.opacity = '0.8';
-                        shortDesc.style.transform = 'translateY(0)';
+                        shortDesc.style.opacity = '0.85';
+                        shortDesc.style.maxHeight = '80px';
                       }
                       const accentLine = e.currentTarget.querySelector('.svc-accent-line');
                       if(accentLine && activeSvc !== s.id) {
                         accentLine.style.width = '0';
                       }
+                      const hoverOverlay = e.currentTarget.querySelector('.svc-hover-overlay');
+                      if(hoverOverlay && activeSvc !== s.id) {
+                        hoverOverlay.style.opacity = '0';
+                      }
                     }}>
                     
-                    {/* Animated overlay gradient */}
+                    {/* Dark overlay for better text readability */}
                     <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0,0,0,0.4)',
+                      pointerEvents: 'none',
+                      zIndex: 1
+                    }}></div>
+                    
+                    {/* Animated green overlay gradient */}
+                    <div className="svc-hover-overlay" style={{
                       position: 'absolute',
                       inset: 0,
                       background: 'linear-gradient(135deg, rgba(16,185,129,0.25) 0%, rgba(16,185,129,0) 100%)',
                       opacity: activeSvc===s.id ? 1 : 0,
                       transition: 'opacity 0.5s ease',
                       pointerEvents: 'none',
-                      zIndex: 1
+                      zIndex: 2
                     }}></div>
                     
                     <div className="svc-card__icon" style={{
@@ -671,30 +688,39 @@ export default function App() {
                       color: s.color,
                       transition: 'all 0.3s ease',
                       position: 'relative',
-                      zIndex: 2,
-                      filter: activeSvc===s.id ? 'drop-shadow(0 4px 12px rgba(16,185,129,0.6))' : 'none'
+                      zIndex: 3,
+                      filter: activeSvc===s.id ? 'drop-shadow(0 4px 12px rgba(16,185,129,0.6))' : 'drop-shadow(0 2px 6px rgba(0,0,0,0.8))'
                     }} aria-hidden="true">{s.icon}</div>
                     
                     <h3 className="svc-card__title" style={{
                       position: 'relative',
-                      zIndex: 2,
+                      zIndex: 3,
                       transition: 'all 0.3s ease',
-                      color: activeSvc===s.id ? '#10b981' : '#fff'
+                      color: activeSvc===s.id ? '#10b981' : '#fff',
+                      textShadow: '0 2px 12px rgba(0,0,0,0.9), 0 4px 24px rgba(0,0,0,0.6)',
+                      fontSize: '1.15rem',
+                      fontWeight: '700',
+                      marginBottom: '0.5rem'
                     }}>{s.title}</h3>
                     
                     <p className="svc-card__short" style={{
                       position: 'relative',
-                      zIndex: 2,
-                      opacity: activeSvc===s.id ? 1 : 0.8,
-                      transform: activeSvc===s.id ? 'translateY(0)' : 'translateY(0)',
-                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                      zIndex: 3,
+                      opacity: activeSvc===s.id ? 1 : 0.85,
+                      maxHeight: activeSvc===s.id ? '200px' : '80px',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)',
+                      fontSize: '0.9rem',
+                      lineHeight: '1.5',
+                      color: '#e5e5e5'
                     }}>{s.short}</p>
                     
                     <span className="svc-card__arrow" aria-hidden="true" style={{
                       position: 'relative',
-                      zIndex: 2,
+                      zIndex: 3,
                       transition: 'all 0.3s ease',
-                      color: activeSvc===s.id ? '#10b981' : 'inherit'
+                      color: activeSvc===s.id ? '#10b981' : '#fff',
+                      filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.8))'
                     }}><ArrowRight/></span>
                     
                     {/* Animated bottom accent line */}
@@ -706,7 +732,7 @@ export default function App() {
                       height: '4px',
                       background: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
                       transition: 'width 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                      zIndex: 3
+                      zIndex: 4
                     }}></div>
                   </button>
                 ))}
