@@ -294,8 +294,8 @@ const CaseStudyPage = () => {
           </div>
 
           {/* Featured Device Detail Card */}
-          <div className="glass-card" style={{ marginBottom: '3rem', padding: '2.5rem', maxWidth: '900px', margin: '0 auto 3rem' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '2rem', alignItems: 'center' }}>
+          <div className="glass-card cs-device-detail-card" style={{ marginBottom: '3rem', padding: '2.5rem', maxWidth: '900px', margin: '0 auto 3rem' }}>
+            <div className="cs-device-detail-grid">
               <div>
                 <img 
                   src={imageSources[currentSlide]} 
@@ -519,7 +519,7 @@ const CaseStudyPage = () => {
           </div>
 
           {/* Key Features Grid - Minimal Design */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
+          <div className="cs-features-grid">
             {/* Left Column - Technical Achievements */}
             <div className="glass-card cs-feature-card">
               <h3 style={{ fontSize: '1.3rem', fontWeight: '700', color: '#ffffff', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
