@@ -2458,3 +2458,17 @@ button:focus-visible,a:focus-visible{outline:2px solid #10b981;outline-offset:3p
     box-shadow: 0 20px 70px rgba(16,185,129,0.6);
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   CASE STUDIES CARDS - ENGAGING ANIMATIONS
+═══════════════════════════════════════════════════════ */
+.case-studies__card {
+  animation: fadeInUp 0.6s ease-out backwards;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.case-studies__card:nth-child(1) { animation-delay: 0.1s; }
+.case-studies__card:nth-child(2) { animation-delay: 0.25s; }
+.case-studies__card:nth-child(3) { animation-delay: 0.4s; }
+.case-studies__card:nth-child(4) { animation-delay: 0.55s; }

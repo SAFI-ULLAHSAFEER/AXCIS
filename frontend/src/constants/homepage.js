@@ -111,6 +111,7 @@ export const CASE_STUDIES = [
       { value: '100%', label: 'On-site precision' },
     ],
     stack: ['Juniper Switches', 'APC Smart-UPS', 'Cat6a/Fiber Cabling', 'Datacenter Operations'],
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80'
   },
   {
     id: 'cloud-migration',
@@ -124,6 +125,7 @@ export const CASE_STUDIES = [
       { value: '6 mo', label: 'Full migration timeline' },
     ],
     stack: ['AWS', 'Azure', 'Terraform', 'Kubernetes'],
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80'
   },
   {
     id: 'ai-platform',
@@ -137,6 +139,7 @@ export const CASE_STUDIES = [
       { value: '12', label: 'Integrated data sources' },
     ],
     stack: ['Python', 'Azure', 'Power BI', 'ML Pipeline'],
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80'
   },
   {
     id: 'security-ops',
@@ -150,6 +153,7 @@ export const CASE_STUDIES = [
       { value: '24/7', label: 'Security monitoring' },
     ],
     stack: ['SIEM', 'Zero Trust', 'AWS', 'Palo Alto'],
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80'
   },
 ];
 
